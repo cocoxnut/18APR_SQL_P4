@@ -1,0 +1,768 @@
+{\rtf1\ansi\ansicpg1251\cocoartf2638
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset0 Menlo-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red112\green152\blue201;\red55\green239\blue32;
+\red57\green192\blue38;\red71\green112\blue255;\red59\green189\blue255;}
+{\*\expandedcolortbl;;\csgray\c0;\cssrgb\c50991\c66541\c82899;\cssrgb\c22319\c93015\c16433;
+\cssrgb\c25706\c77963\c19557;\cssrgb\c34508\c53655\c100000;\cssrgb\c27267\c78870\c100000;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \CocoaLigature0 postgres=# CREATE DATABASE marketing;\
+CREATE DATABASE\
+postgres=# \\c marketing\
+You are now connected to database "marketing" as user "yrysova".\
+marketing=# CREATE USER asel with password '972503';\
+ERROR:  role "asel" already exists\
+marketing=# CREATE USER aselya with password '972503';\
+CREATE ROLE\
+marketing=# GRANT ALL PRIVILEGES ON DATABASE marketing TO aselya;\
+GRANT\
+marketing=# nano market.py\
+marketing-# python3 market.py\
+marketing-# python3 market.py\
+marketing-# \\q\
+\cf3 (sql_db) \cf4 yrysova\cf2 @MacBook-Pro-Asel \cf5 ~/D/P/18APR_SQL_P4\cf2  (master)> \cf6 python3\cf2  \cf7 \ul \ulc7 market.py\cf2 \ulnone                                                                                                          
+\f1\b \cf5 (base) 
+\f0\b0 \cf2 \
+\uc0\u1042 \u1074 \u1077 \u1076 \u1080 \u1090 \u1077  \u1087 \u1072 \u1088 \u1086 \u1083 \u1100  \u1086 \u1090  \u1041 \u1072 \u1079 \u1099  \u1044 \u1072 \u1085 \u1085 \u1099 \u1093 : 972503\
+\cf3 (sql_db) \cf4 yrysova\cf2 @MacBook-Pro-Asel \cf5 ~/D/P/18APR_SQL_P4\cf2  (master)> \cf6 psql\cf2  \cf7 postgres\cf2                                                                                                              
+\f1\b \cf5 (base) 
+\f0\b0 \cf2 \
+psql (14.2)\
+Type "help" for help.\
+\
+postgres=# \\c marketing\
+You are now connected to database "marketing" as user "yrysova".\
+marketing=# \\d\
+                       List of relations\
+ Schema |               Name                |   Type   | Owner  \
+--------+-----------------------------------+----------+--------\
+ public | globus                            | table    | aselya\
+ public | globus_product_id_seq             | sequence | aselya\
+ public | narodnii                          | table    | aselya\
+ public | narodnii_product_id_seq           | sequence | aselya\
+ public | product_types                     | table    | aselya\
+ public | product_types_product_type_id_seq | sequence | aselya\
+(6 rows)\
+\
+marketing=# SELECT * FROM globus;\
+ product_id | product_type_id | product_name | product_amount | day_to_expire |        date_delivered        \
+------------+-----------------+--------------+----------------+---------------+------------------------------\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06\
+          2 |               4 | Vino         |            462 |             1 | 2022-04-18 12:49:56.21801+06\
+          3 |               2 | Pirojki      |             23 |             9 | 2022-04-18 12:49:56.21801+06\
+          4 |               2 | Cakes        |             64 |             1 | 2022-04-18 12:49:56.21801+06\
+          5 |               6 | Mango        |            152 |             6 | 2022-04-18 12:49:56.21801+06\
+          6 |               3 | Kit Kat      |             59 |             7 | 2022-04-18 12:49:56.21801+06\
+          7 |               6 | Grushi       |            691 |             3 | 2022-04-18 12:49:56.21801+06\
+          8 |               1 | Moloko       |             42 |             4 | 2022-04-18 12:49:56.21801+06\
+          9 |               3 | Snikers      |            266 |             3 | 2022-04-18 12:49:56.21801+06\
+         10 |               1 | Yougurt      |            188 |             6 | 2022-04-18 12:49:56.21801+06\
+         11 |               2 | Pizza        |            896 |             6 | 2022-04-18 12:49:56.21801+06\
+         12 |               5 | Baklajani    |             25 |            10 | 2022-04-18 12:49:56.21801+06\
+         13 |               4 | Pivo         |            294 |             6 | 2022-04-18 12:49:56.21801+06\
+         14 |               4 | Kaniyak      |            191 |             6 | 2022-04-18 12:49:56.21801+06\
+         15 |               4 | Rom          |            251 |             1 | 2022-04-18 12:49:56.21801+06\
+         16 |               6 | Bananni      |            127 |             2 | 2022-04-18 12:49:56.21801+06\
+         17 |               2 | Cakes        |            523 |            10 | 2022-04-18 12:49:56.21801+06\
+         18 |               4 | Rom          |            329 |             2 | 2022-04-18 12:49:56.21801+06\
+         19 |               1 | Cheese       |            928 |             7 | 2022-04-18 12:49:56.21801+06\
+         20 |               4 | Vodka        |            349 |            10 | 2022-04-18 12:49:56.21801+06\
+         21 |               4 | Pivo         |             36 |             4 | 2022-04-18 12:49:56.21801+06\
+         22 |               5 | Tikva        |            892 |             9 | 2022-04-18 12:49:56.21801+06\
+         23 |               6 | Grushi       |            739 |             1 | 2022-04-18 12:49:56.21801+06\
+         24 |               6 | Mango        |            233 |             9 | 2022-04-18 12:49:56.21801+06\
+         25 |               3 | Snikers      |            700 |             3 | 2022-04-18 12:49:56.21801+06\
+         26 |               5 | Piyaz        |            447 |             6 | 2022-04-18 12:49:56.21801+06\
+         27 |               6 | Grushi       |            925 |             9 | 2022-04-18 12:49:56.21801+06\
+         28 |               4 | Pivo         |            182 |             9 | 2022-04-18 12:49:56.21801+06\
+         29 |               5 | Kartoshka    |              3 |             1 | 2022-04-18 12:49:56.21801+06\
+         30 |               5 | Pomidori     |            967 |            10 | 2022-04-18 12:49:56.21801+06\
+         31 |               5 | Kartoshka    |            855 |             7 | 2022-04-18 12:49:56.21801+06\
+         32 |               1 | Shoro        |            523 |             1 | 2022-04-18 12:49:56.21801+06\
+marketing=# q\
+marketing-# SELECT product_type FROM globus;\
+ERROR:  syntax error at or near "q"\
+LINE 1: q\
+        ^\
+marketing=# SELECT product_type FROM globus;\
+ERROR:  column "product_type" does not exist\
+LINE 1: SELECT product_type FROM globus;\
+               ^\
+HINT:  Perhaps you meant to reference the column "globus.product_type_id" or the column "globus.product_name".\
+marketing=# SELECT product_type_id FROM globus;\
+ product_type_id \
+-----------------\
+               1\
+               4\
+               2\
+               2\
+               6\
+               3\
+               6\
+               1\
+               3\
+               1\
+               2\
+               5\
+               4\
+               4\
+               4\
+               6\
+               2\
+               4\
+               1\
+               4\
+               4\
+               5\
+               6\
+               6\
+               3\
+               5\
+               6\
+               4\
+               5\
+               5\
+               5\
+               1\
+marketing=# SELECT * FROM narodnii;\
+ product_id | product_type_id | product_name | product_amount | day_to_expire |        date_delivered        \
+------------+-----------------+--------------+----------------+---------------+------------------------------\
+          1 |               1 | Airan        |            254 |             1 | 2022-04-18 12:49:56.21801+06\
+          2 |               4 | Vino         |            826 |             7 | 2022-04-18 12:49:56.21801+06\
+          3 |               2 | Boorsoki     |            167 |             9 | 2022-04-18 12:49:56.21801+06\
+          4 |               2 | Pizza        |            180 |             7 | 2022-04-18 12:49:56.21801+06\
+          5 |               6 | Vishnya      |            532 |             4 | 2022-04-18 12:49:56.21801+06\
+          6 |               3 | Twix         |            860 |             2 | 2022-04-18 12:49:56.21801+06\
+          7 |               6 | Ananas       |            299 |             2 | 2022-04-18 12:49:56.21801+06\
+          8 |               1 | Cheese       |            584 |             5 | 2022-04-18 12:49:56.21801+06\
+          9 |               3 | Nutella      |            562 |             4 | 2022-04-18 12:49:56.21801+06\
+         10 |               1 | Airan        |            813 |             4 | 2022-04-18 12:49:56.21801+06\
+         11 |               2 | Cakes        |            678 |             9 | 2022-04-18 12:49:56.21801+06\
+         12 |               5 | Piyaz        |            556 |             7 | 2022-04-18 12:49:56.21801+06\
+         13 |               4 | Rom          |            351 |            10 | 2022-04-18 12:49:56.21801+06\
+         14 |               4 | Kaniyak      |            377 |             8 | 2022-04-18 12:49:56.21801+06\
+         15 |               4 | Vino         |            519 |            10 | 2022-04-18 12:49:56.21801+06\
+         16 |               6 | Mango        |            932 |            10 | 2022-04-18 12:49:56.21801+06\
+         17 |               2 | Bulochki     |            325 |             5 | 2022-04-18 12:49:56.21801+06\
+         18 |               4 | Whiskey      |            524 |            10 | 2022-04-18 12:49:56.21801+06\
+         19 |               1 | Kaimak       |            886 |             3 | 2022-04-18 12:49:56.21801+06\
+         20 |               4 | Rom          |            280 |             9 | 2022-04-18 12:49:56.21801+06\
+         21 |               4 | Liker        |            650 |             8 | 2022-04-18 12:49:56.21801+06\
+         22 |               5 | Morkovka     |            868 |             8 | 2022-04-18 12:49:56.21801+06\
+         23 |               6 | Grushi       |            827 |             4 | 2022-04-18 12:49:56.21801+06\
+         24 |               6 | Yabloki      |            140 |             2 | 2022-04-18 12:49:56.21801+06\
+         25 |               3 | Snikers      |            890 |             3 | 2022-04-18 12:49:56.21801+06\
+         26 |               5 | Pomidori     |            294 |             4 | 2022-04-18 12:49:56.21801+06\
+         27 |               6 | Yabloki      |            254 |             4 | 2022-04-18 12:49:56.21801+06\
+         28 |               4 | Kaniyak      |            766 |             4 | 2022-04-18 12:49:56.21801+06\
+         29 |               5 | Redka        |            940 |            10 | 2022-04-18 12:49:56.21801+06\
+         30 |               5 | Tikva        |            990 |             7 | 2022-04-18 12:49:56.21801+06\
+         31 |               5 | Baklajani    |            481 |             2 | 2022-04-18 12:49:56.21801+06\
+         32 |               1 | Kaimak       |            304 |             2 | 2022-04-18 12:49:56.21801+06\
+marketing=# SELECT product_name, product_amount WHERE day_to_expire HAVING day_to_expire < 3;\
+ERROR:  column "product_name" does not exist\
+LINE 1: SELECT product_name, product_amount WHERE day_to_expire HAVI...\
+               ^\
+marketing=# SELECT product_name, product_amount FROM narodnii WHERE day_to_expire HAVING day_to_expire < 3;\
+ERROR:  argument of WHERE must be type boolean, not type smallint\
+LINE 1: ... product_name, product_amount FROM narodnii WHERE day_to_exp...\
+                                                             ^\
+marketing=# SELECT product_name, product_amount FROM narodnii GROUP BY product_name HAVING day_to_expire < 3;\
+ERROR:  column "narodnii.product_amount" must appear in the GROUP BY clause or be used in an aggregate function\
+LINE 1: SELECT product_name, product_amount FROM narodnii GROUP BY p...\
+                             ^\
+marketing=# SELECT product_name, product_amount FROM narodnii HAVING day_to_expire < 3;\
+ERROR:  column "narodnii.product_name" must appear in the GROUP BY clause or be used in an aggregate function\
+LINE 1: SELECT product_name, product_amount FROM narodnii HAVING day...\
+               ^\
+marketing=# SELECT product_name, product_amount FROM narodnii ORDER BY product_name HAVING day_to_expire < 3;\
+ERROR:  syntax error at or near "HAVING"\
+LINE 1: ...roduct_amount FROM narodnii ORDER BY product_name HAVING day...\
+                                                             ^\
+marketing=# SELECT product_name, product_amount FROM narodnii GROUP BY product_id HAVING day_to_expire < 3;\
+ product_name | product_amount \
+--------------+----------------\
+ Yashkino     |            685\
+ Yougurt      |            916\
+ Yashkino     |             65\
+ Yougurt      |            717\
+ Snikers      |            669\
+ Bulochki     |             32\
+ Whiskey      |            569\
+ Kaimak       |            304\
+ Kivi         |            601\
+ Ananas       |            299\
+ Airan        |            425\
+ Mango        |            240\
+ Snikers      |            425\
+ Grushi       |            384\
+ Pizza        |            648\
+ Twix         |            860\
+ Cheese       |            943\
+ Pomidori     |            381\
+ Kit Kat      |            960\
+ Liker        |            127\
+ Yashkino     |            783\
+ Yabloki      |            140\
+ Bulochki     |            888\
+ Pomidori     |            258\
+ Baklajani    |            481\
+ Baklajani    |            851\
+ Chebureki    |            805\
+ Kumis        |            917\
+ Redka        |            615\
+ Redka        |            948\
+ Airan        |            512\
+ Chebureki    |            765\
+marketing=# SELECT COUNT(product_amount) FROM globus, narodnii WHERE product_name = 'Snikers';\
+ERROR:  column reference "product_amount" is ambiguous\
+LINE 1: SELECT COUNT(product_amount) FROM globus, narodnii WHERE pro...\
+                     ^\
+marketing=# SELECT COUNT(product_amount) FROM globus, narodnii WHERE product_name LIKE 'Snik%';\
+ERROR:  column reference "product_amount" is ambiguous\
+LINE 1: SELECT COUNT(product_amount) FROM globus, narodnii WHERE pro...\
+                     ^\
+marketing=# SELECT count(product_amount) FROM globus, narodnii WHERE product_name = 'Snikers';\
+ERROR:  column reference "product_amount" is ambiguous\
+LINE 1: SELECT count(product_amount) FROM globus, narodnii WHERE pro...\
+                     ^\
+marketing=# SELECT count(*) FROM globus, narodnii WHERE product_name = 'Snikers';\
+ERROR:  column reference "product_name" is ambiguous\
+LINE 1: SELECT count(*) FROM globus, narodnii WHERE product_name = '...\
+                                                    ^\
+marketing=# SELECT count(product_amount) FROM globus, narodnii WHERE globus.product_name = 'Snikers' AND narodnii.product_name = 'Snikers';\
+ERROR:  column reference "product_amount" is ambiguous\
+LINE 1: SELECT count(product_amount) FROM globus, narodnii WHERE glo...\
+                     ^\
+marketing=# SELECT product_amount FROM globus FULL OUTER JOIN narodnii ON globus > product_name = 'Snikers' = narodnii > product_name = 'Snikers';\
+ERROR:  syntax error at or near "="\
+LINE 1: ...FULL OUTER JOIN narodnii ON globus > product_name = 'Snikers...\
+                                                             ^\
+marketing=# SELECT product_amount FROM globus FULL OUTER JOIN narodnii ON globus > product_name = narodnii > product_name WHERE product_name = 'Snikers';\
+ERROR:  syntax error at or near "="\
+LINE 1: ...FULL OUTER JOIN narodnii ON globus > product_name = narodnii...\
+                                                             ^\
+marketing=# SELECT product_amount FROM globus FULL OUTER JOIN narodnii ON globus.product_name = narodnii.product_name WHERE product_name = 'Snikers';\
+ERROR:  column reference "product_amount" is ambiguous\
+LINE 1: SELECT product_amount FROM globus FULL OUTER JOIN narodnii O...\
+               ^\
+marketing=# SELECT globus.product_id, globus.product_name, globus.product_amount, narodnii.product_name, narodnii.product_amount FROM globus LEFT JOIN narodnii ON globus.product_name = narodnii.product_name WHERE product_name = 'Snikers';\
+ERROR:  column reference "product_name" is ambiguous\
+LINE 1: ...globus.product_name = narodnii.product_name WHERE product_na...\
+                                                             ^\
+marketing=# SELECT columns FROM globus FULL OUTER JOIN narodnii ON globus.product_name = narodnii.product_name WHERE product_name = 'Snikers';\
+ERROR:  column "columns" does not exist\
+LINE 1: SELECT columns FROM globus FULL OUTER JOIN narodnii ON globu...\
+               ^\
+marketing=# SELECT * FROM globus, narodnii;\
+ product_id | product_type_id | product_name | product_amount | day_to_expire |        date_delivered        | product_id | product_type_id | product_name | product_amount | day_to_expire |        date_delivered        \
+------------+-----------------+--------------+----------------+---------------+------------------------------+------------+-----------------+--------------+----------------+---------------+------------------------------\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          1 |               1 | Airan        |            254 |             1 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          2 |               4 | Vino         |            826 |             7 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          3 |               2 | Boorsoki     |            167 |             9 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          4 |               2 | Pizza        |            180 |             7 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          5 |               6 | Vishnya      |            532 |             4 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          6 |               3 | Twix         |            860 |             2 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          7 |               6 | Ananas       |            299 |             2 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          8 |               1 | Cheese       |            584 |             5 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          9 |               3 | Nutella      |            562 |             4 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |         10 |               1 | Airan        |            813 |             4 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |         11 |               2 | Cakes        |            678 |             9 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |         12 |               5 | Piyaz        |            556 |             7 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |         13 |               4 | Rom          |            351 |            10 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |         14 |               4 | Kaniyak      |            377 |             8 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |         15 |               4 | Vino         |            519 |            10 | 2022-04-18 12:49:56.21801+06\
+marketing=# SELECT COUNT(product_id) FROM globus;\
+ count \
+-------\
+   200\
+(1 row)\
+\
+marketing=# SELECT COUNT(globus.product_amount, narodnii.product_amount) FROM globus, narodnii;\
+ERROR:  function count(integer, integer) does not exist\
+LINE 1: SELECT COUNT(globus.product_amount, narodnii.product_amount)...\
+               ^\
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.\
+marketing=# SELECT COUNT(product_amount) FROM globus, narodnii;\
+ERROR:  column reference "product_amount" is ambiguous\
+LINE 1: SELECT COUNT(product_amount) FROM globus, narodnii;\
+                     ^\
+marketing=# SELECT COUNT(product_amount) FROM globus;\
+ count \
+-------\
+   200\
+(1 row)\
+\
+marketing=# SELECT product_amount FROM globus, narodnii;\
+ERROR:  column reference "product_amount" is ambiguous\
+LINE 1: SELECT product_amount FROM globus, narodnii;\
+               ^\
+marketing=# SELECT * FROM globus, narodnii;\
+ product_id | product_type_id | product_name | product_amount | day_to_expire |        date_delivered        | product_id | product_type_id | product_name | product_amount | day_to_expire |        date_delivered        \
+------------+-----------------+--------------+----------------+---------------+------------------------------+------------+-----------------+--------------+----------------+---------------+------------------------------\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          1 |               1 | Airan        |            254 |             1 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          2 |               4 | Vino         |            826 |             7 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          3 |               2 | Boorsoki     |            167 |             9 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          4 |               2 | Pizza        |            180 |             7 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          5 |               6 | Vishnya      |            532 |             4 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          6 |               3 | Twix         |            860 |             2 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          7 |               6 | Ananas       |            299 |             2 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          8 |               1 | Cheese       |            584 |             5 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |          9 |               3 | Nutella      |            562 |             4 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |         10 |               1 | Airan        |            813 |             4 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |         11 |               2 | Cakes        |            678 |             9 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |         12 |               5 | Piyaz        |            556 |             7 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |         13 |               4 | Rom          |            351 |            10 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |         14 |               4 | Kaniyak      |            377 |             8 | 2022-04-18 12:49:56.21801+06\
+          1 |               1 | Kaimak       |            964 |             9 | 2022-04-18 12:49:56.21801+06 |         15 |               4 | Vino         |            519 |            10 | 2022-04-18 12:49:56.21801+06\
+marketing=# SELECT product_id FROM globus, narodnii WHERE product_name = 'Snikers';\
+ERROR:  column reference "product_id" is ambiguous\
+LINE 1: SELECT product_id FROM globus, narodnii WHERE product_name =...\
+               ^\
+marketing=# SELECT * FROM globus, narodnii WHERE product_name = 'Snikers';\
+ERROR:  column reference "product_name" is ambiguous\
+LINE 1: SELECT * FROM globus, narodnii WHERE product_name = 'Snikers...\
+                                             ^\
+marketing=# SELECT\
+marketing-# COUNT(globus.product_amount),\
+marketing-# COUNT(narodnii.product_amount)\
+marketing-# FROM globus, narodnii\
+marketing-# WHERE globus.product_name='Snikers', narodnii.product_name='Snikers';\
+ERROR:  syntax error at or near ","\
+LINE 5: WHERE globus.product_name='Snikers', narodnii.product_name='...\
+                                           ^\
+marketing=# SELECT\
+COUNT(globus.product_amount),\
+COUNT(narodnii.product_amount)\
+FROM globus, narodnii\
+WHERE globus.product_name='Snikers' AND narodnii.product_name='Snikers';\
+ count | count \
+-------+-------\
+    40 |    40\
+(1 row)\
+\
+marketing=# SELECT globus.product_name, narodnii.product_name FROM globus, narodnii WHERE globus.product_type = day_to_expire AND narodnii.product_type = day_to_expire;\
+ERROR:  column globus.product_type does not exist\
+LINE 1: ...narodnii.product_name FROM globus, narodnii WHERE globus.pro...\
+                                                             ^\
+HINT:  Perhaps you meant to reference the column "globus.product_type_id" or the column "globus.product_name".\
+marketing=# SELECT globus.product_name, narodnii.product_name FROM globus, narodnii WHERE globus.product_type_id = day_to_expire AND narodnii.product_type_id = day_to_expire;\
+ERROR:  column reference "day_to_expire" is ambiguous\
+LINE 1: ...M globus, narodnii WHERE globus.product_type_id = day_to_exp...\
+                                                             ^\
+marketing=# SELECT globus.product_name, narodnii.product_name FROM globus, narodnii WHERE globus.product_type_id = globus.day_to_expire AND narodnii.product_type_id = narodnii.day_to_expire;\
+ product_name | product_name \
+--------------+--------------\
+ Mango        | Airan\
+ Mango        | Snikers\
+ Mango        | Kaniyak\
+ Mango        | Kartoshka\
+ Mango        | Kaniyak\
+ Mango        | Nutella\
+ Mango        | Airan\
+ Mango        | Alpen Gold\
+ Mango        | Pivo\
+ Mango        | Liker\
+ Mango        | Moloko\
+ Mango        | Kumis\
+ Mango        | Chebureki\
+ Mango        | Snikers\
+ Mango        | Bananni\
+ Mango        | Vino\
+ Mango        | Kit Kat\
+ Mango        | Pizza\
+ Mango        | Vodka\
+ Mango        | Bulochki\
+ Mango        | Redka\
+ Mango        | Kartoshka\
+ Mango        | Twix\
+ Mango        | Snikers\
+ Snikers      | Airan\
+ Snikers      | Snikers\
+ Snikers      | Kaniyak\
+ Snikers      | Kartoshka\
+ Snikers      | Kaniyak\
+ Snikers      | Nutella\
+ Snikers      | Airan\
+ Snikers      | Alpen Gold\
+marketing=# SELECT globus.product_name, globus.product_type_id, globus.day_to_expire, narodnii.product_name, narodnni.product_type_id, narodnii.day_to_expire FROM globus, narodnii WHERE globus.product_type_id = globus.day_to_expire AND narodnii.product_type_id = narodnii.day_to_expire;\
+ERROR:  missing FROM-clause entry for table "narodnni"\
+LINE 1: ..._id, globus.day_to_expire, narodnii.product_name, narodnni.p...\
+                                                             ^\
+marketing=# SELECT globus.product_name, globus.product_type_id, globus.day_to_expire, narodnii.product_name, narodnii.product_type_id, narodnii.day_to_expire FROM globus, narodnii WHERE globus.product_type_id = globus.day_to_expire AND narodnii.product_type_id = narodnii.day_to_expire;\
+ product_name | product_type_id | day_to_expire | product_name | product_type_id | day_to_expire \
+--------------+-----------------+---------------+--------------+-----------------+---------------\
+ Mango        |               6 |             6 | Airan        |               1 |             1\
+ Mango        |               6 |             6 | Snikers      |               3 |             3\
+ Mango        |               6 |             6 | Kaniyak      |               4 |             4\
+ Mango        |               6 |             6 | Kartoshka    |               5 |             5\
+ Mango        |               6 |             6 | Kaniyak      |               4 |             4\
+ Mango        |               6 |             6 | Nutella      |               3 |             3\
+ Mango        |               6 |             6 | Airan        |               1 |             1\
+ Mango        |               6 |             6 | Alpen Gold   |               3 |             3\
+ Mango        |               6 |             6 | Pivo         |               4 |             4\
+ Mango        |               6 |             6 | Liker        |               4 |             4\
+ Mango        |               6 |             6 | Moloko       |               1 |             1\
+ Mango        |               6 |             6 | Kumis        |               1 |             1\
+ Mango        |               6 |             6 | Chebureki    |               2 |             2\
+ Mango        |               6 |             6 | Snikers      |               3 |             3\
+ Mango        |               6 |             6 | Bananni      |               6 |             6\
+ Mango        |               6 |             6 | Vino         |               4 |             4\
+ Mango        |               6 |             6 | Kit Kat      |               3 |             3\
+ Mango        |               6 |             6 | Pizza        |               2 |             2\
+ Mango        |               6 |             6 | Vodka        |               4 |             4\
+ Mango        |               6 |             6 | Bulochki     |               2 |             2\
+ Mango        |               6 |             6 | Redka        |               5 |             5\
+ Mango        |               6 |             6 | Kartoshka    |               5 |             5\
+ Mango        |               6 |             6 | Twix         |               3 |             3\
+ Mango        |               6 |             6 | Snikers      |               3 |             3\
+ Snikers      |               3 |             3 | Airan        |               1 |             1\
+ Snikers      |               3 |             3 | Snikers      |               3 |             3\
+ Snikers      |               3 |             3 | Kaniyak      |               4 |             4\
+ Snikers      |               3 |             3 | Kartoshka    |               5 |             5\
+ Snikers      |               3 |             3 | Kaniyak      |               4 |             4\
+ Snikers      |               3 |             3 | Nutella      |               3 |             3\
+ Snikers      |               3 |             3 | Airan        |               1 |             1\
+ Snikers      |               3 |             3 | Alpen Gold   |               3 |             3\
+marketing=# SELECT globus.product_name, globus.day_to_expire, narodnii.product_name, narodnii.day_to_expire FROM globus, narodnii WHERE globus.day_to_expire = narodnii.day_to_expire;\
+ product_name | day_to_expire | product_name | day_to_expire \
+--------------+---------------+--------------+---------------\
+ Tikva        |             1 | Airan        |             1\
+ Vino         |             1 | Airan        |             1\
+ Tikva        |             1 | Airan        |             1\
+ Grushi       |             1 | Airan        |             1\
+ Airan        |             1 | Airan        |             1\
+ Tikva        |             1 | Airan        |             1\
+ Ananas       |             1 | Airan        |             1\
+ Kumis        |             1 | Airan        |             1\
+ Kit Kat      |             1 | Airan        |             1\
+ Pomidori     |             1 | Airan        |             1\
+ Shoro        |             1 | Airan        |             1\
+ Morkovka     |             1 | Airan        |             1\
+ Pivo         |             1 | Airan        |             1\
+ Yabloki      |             1 | Airan        |             1\
+ Shoro        |             1 | Airan        |             1\
+ Kartoshka    |             1 | Airan        |             1\
+ Grushi       |             1 | Airan        |             1\
+ Rom          |             1 | Airan        |             1\
+ Cakes        |             1 | Airan        |             1\
+ Vino         |             1 | Airan        |             1\
+ Redka        |             7 | Vino         |             7\
+ Kaimak       |             7 | Vino         |             7\
+ Pivo         |             7 | Vino         |             7\
+ Kartoshka    |             7 | Vino         |             7\
+ Kit Kat      |             7 | Vino         |             7\
+ Yougurt      |             7 | Vino         |             7\
+ Bounty       |             7 | Vino         |             7\
+ Cheese       |             7 | Vino         |             7\
+ Kartoshka    |             7 | Vino         |             7\
+ Cheese       |             7 | Vino         |             7\
+ Kit Kat      |             7 | Vino         |             7\
+ Tikva        |             9 | Boorsoki     |             9\
+marketing=# SELECT product_name, product_amount FROM globus WHERE product_name LIKE 'Piy%';\
+ product_name | product_amount \
+--------------+----------------\
+ Piyaz        |            447\
+ Piyaz        |            716\
+ Piyaz        |            897\
+ Piyaz        |            689\
+ Piyaz        |            143\
+(5 rows)\
+\
+marketing=# DELETE FROM narodnii WHERE day_to_expire = 0;\
+DELETE 0\
+marketing=# DELETE FROM globus WHERE globus.product_name = narodnii.product_name AND globus.day_to_expire = narodnii.day_to_expire;\
+ERROR:  missing FROM-clause entry for table "narodnii"\
+LINE 1: DELETE FROM globus WHERE globus.product_name = narodnii.prod...\
+                                                       ^\
+marketing=# DELETE FROM globus > (SELECT globus.product_name, globus.day_to_expire, narodnii.product_name, narodnii.day_to_expire WHERE globus.product_name = narodnii.product_name AND globus.day_to_expire = narodnii.day_to_expire);\
+ERROR:  syntax error at or near ">"\
+LINE 1: DELETE FROM globus > (SELECT globus.product_name, globus.day...\
+                           ^\
+marketing=# DELETE FROM globus = (SELECT globus.product_name, globus.day_to_expire, narodnii.product_name, narodnii.day_to_expire WHERE globus.product_name = narodnii.product_name AND globus.day_to_expire = narodnii.day_to_expire);\
+ERROR:  syntax error at or near "="\
+LINE 1: DELETE FROM globus = (SELECT globus.product_name, globus.day...\
+                           ^\
+marketing=# DELETE FROM globus, (SELECT globus.product_name, globus.day_to_expire, narodnii.product_name, narodnii.day_to_expire WHERE globus.product_name = narodnii.product_name AND globus.day_to_expire = narodnii.day_to_expire);\
+ERROR:  syntax error at or near ","\
+LINE 1: DELETE FROM globus, (SELECT globus.product_name, globus.day_...\
+                          ^\
+marketing=# DELETE FROM globus (SELECT globus.product_name, globus.day_to_expire, narodnii.product_name, narodnii.day_to_expire WHERE globus.product_name = narodnii.product_name AND globus.day_to_expire = narodnii.day_to_expire);\
+ERROR:  syntax error at or near "("\
+LINE 1: DELETE FROM globus (SELECT globus.product_name, globus.day_t...\
+                           ^\
+marketing=# DELETE FROM globus WHERE globus.product_name = (SELECT globus.product_name, globus.day_to_expire, narodnii.product_name, narodnii.day_to_expire WHERE globus.product_name = narodnii.product_name AND globus.day_to_expire = narodnii.day_to_expire);\
+ERROR:  missing FROM-clause entry for table "narodnii"\
+LINE 1: ...SELECT globus.product_name, globus.day_to_expire, narodnii.p...\
+                                                             ^\
+marketing=# DELETE product_name, day_to_expire FROM globus, (SELECT globus.product_name = narodnii.product_name AND globus.day_to_expire = narodnii.day_to_expire FROM globus, narodnii);\
+ERROR:  syntax error at or near "product_name"\
+LINE 1: DELETE product_name, day_to_expire FROM globus, (SELECT glob...\
+               ^\
+marketing=# DELETE * FROM globus, (SELECT globus.product_name = narodnii.product_name AND globus.day_to_expire = narodnii.day_to_expire FROM globus, narodnii);\
+ERROR:  syntax error at or near "*"\
+LINE 1: DELETE * FROM globus, (SELECT globus.product_name = narodnii...\
+               ^\
+marketing=# DELETE product_name FROM globus, (SELECT globus.product_name = narodnii.product_name AND globus.day_to_expire = narodnii.day_to_expire FROM globus, narodnii);\
+ERROR:  syntax error at or near "product_name"\
+LINE 1: DELETE product_name FROM globus, (SELECT globus.product_name...\
+               ^\
+marketing=# DELETE globus.product_name AND globus.day_to_expire FROM globus, (SELECT globus.product_name = narodnii.product_name AND globus.day_to_expire = narodnii.day_to_expire FROM globus, narodnii);\
+ERROR:  syntax error at or near "globus"\
+LINE 1: DELETE globus.product_name AND globus.day_to_expire FROM glo...\
+               ^\
+marketing=# SELECT globus.product_name, globus.day_to_expire FROM narodnii LEFT JOIN globus ON narodnii.product_name = globus.product_name AND narodnii.day_to_expire = globus.day_to_expire;\
+ product_name | day_to_expire \
+--------------+---------------\
+ Vino         |             1\
+ Pirojki      |             9\
+ Pirojki      |             9\
+ Pirojki      |             9\
+ Snikers      |             3\
+ Snikers      |             3\
+ Snikers      |             3\
+ Yougurt      |             6\
+ Kaniyak      |             6\
+ Pivo         |             4\
+ Snikers      |             3\
+ Snikers      |             3\
+ Snikers      |             3\
+ Kaimak       |             2\
+ Bananni      |             4\
+ Bananni      |             4\
+ Bounty       |             6\
+ Morkovka     |             1\
+ Morkovka     |             1\
+ Kartoshka    |             3\
+ Kumis        |             3\
+ Moloko       |             8\
+ Pomidori     |             1\
+ Pivo         |             5\
+ Vino         |            10\
+ Vino         |            10\
+ Vino         |            10\
+ Pivo         |             4\
+ Pirojki      |             6\
+ Kit Kat      |             1\
+ Pirojki      |             6\
+ Yougurt      |             7\
+marketing=# DELETE * FROM globus WHERE product_name = (SELECT globus.product_name, globus.day_to_expire FROM narodnii LEFT JOIN globus ON narodnii.product_name = globus.product_name AND narodnii.day_to_expire = globus.day_to_expire);\
+ERROR:  syntax error at or near "*"\
+LINE 1: DELETE * FROM globus WHERE product_name = (SELECT globus.pro...\
+               ^\
+marketing=# DELETE FROM globus WHERE product_name = (SELECT globus.product_name, globus.day_to_expire FROM narodnii LEFT JOIN globus ON narodnii.product_name = globus.product_name AND narodnii.day_to_expire = globus.day_to_expire);\
+ERROR:  subquery must return only one column\
+LINE 1: DELETE FROM globus WHERE product_name = (SELECT globus.produ...\
+                                                ^\
+marketing=# SELECT globus.product_id, globus.product_name, globus.day_to_expire FROM narodnii FULL OUTER JOIN globus ON narodnii.product_name = globus.product_name AND narodnii.day_to_expire = globus.day_to_expire;\
+ product_id | product_name | day_to_expire \
+------------+--------------+---------------\
+          1 | Kaimak       |             9\
+          2 | Vino         |             1\
+          3 | Pirojki      |             9\
+          3 | Pirojki      |             9\
+          3 | Pirojki      |             9\
+          4 | Cakes        |             1\
+          5 | Mango        |             6\
+          6 | Kit Kat      |             7\
+          7 | Grushi       |             3\
+          8 | Moloko       |             4\
+          9 | Snikers      |             3\
+          9 | Snikers      |             3\
+          9 | Snikers      |             3\
+         10 | Yougurt      |             6\
+         11 | Pizza        |             6\
+         12 | Baklajani    |            10\
+         13 | Pivo         |             6\
+         14 | Kaniyak      |             6\
+         15 | Rom          |             1\
+         16 | Bananni      |             2\
+         17 | Cakes        |            10\
+         18 | Rom          |             2\
+         19 | Cheese       |             7\
+         20 | Vodka        |            10\
+         21 | Pivo         |             4\
+         22 | Tikva        |             9\
+         23 | Grushi       |             1\
+         24 | Mango        |             9\
+         25 | Snikers      |             3\
+         25 | Snikers      |             3\
+         25 | Snikers      |             3\
+         26 | Piyaz        |             6\
+marketing=# DELETE FROM globus WHERE product_name IN (SELECT product_name FROM narodnii WHERE day_to_expire IN (SELECT day_to_expire FROM narodnii));\
+DELETE 200\
+marketing=# SELECT * FROM narodnii WHERE product_amount BETWEEN 200 AND 1001;\
+ product_id | product_type_id | product_name | product_amount | day_to_expire |        date_delivered        \
+------------+-----------------+--------------+----------------+---------------+------------------------------\
+          1 |               1 | Airan        |            254 |             1 | 2022-04-18 12:49:56.21801+06\
+          2 |               4 | Vino         |            826 |             7 | 2022-04-18 12:49:56.21801+06\
+          5 |               6 | Vishnya      |            532 |             4 | 2022-04-18 12:49:56.21801+06\
+          6 |               3 | Twix         |            860 |             2 | 2022-04-18 12:49:56.21801+06\
+          7 |               6 | Ananas       |            299 |             2 | 2022-04-18 12:49:56.21801+06\
+          8 |               1 | Cheese       |            584 |             5 | 2022-04-18 12:49:56.21801+06\
+          9 |               3 | Nutella      |            562 |             4 | 2022-04-18 12:49:56.21801+06\
+         10 |               1 | Airan        |            813 |             4 | 2022-04-18 12:49:56.21801+06\
+         11 |               2 | Cakes        |            678 |             9 | 2022-04-18 12:49:56.21801+06\
+         12 |               5 | Piyaz        |            556 |             7 | 2022-04-18 12:49:56.21801+06\
+         13 |               4 | Rom          |            351 |            10 | 2022-04-18 12:49:56.21801+06\
+         14 |               4 | Kaniyak      |            377 |             8 | 2022-04-18 12:49:56.21801+06\
+         15 |               4 | Vino         |            519 |            10 | 2022-04-18 12:49:56.21801+06\
+         16 |               6 | Mango        |            932 |            10 | 2022-04-18 12:49:56.21801+06\
+         17 |               2 | Bulochki     |            325 |             5 | 2022-04-18 12:49:56.21801+06\
+         18 |               4 | Whiskey      |            524 |            10 | 2022-04-18 12:49:56.21801+06\
+         19 |               1 | Kaimak       |            886 |             3 | 2022-04-18 12:49:56.21801+06\
+         20 |               4 | Rom          |            280 |             9 | 2022-04-18 12:49:56.21801+06\
+         21 |               4 | Liker        |            650 |             8 | 2022-04-18 12:49:56.21801+06\
+         22 |               5 | Morkovka     |            868 |             8 | 2022-04-18 12:49:56.21801+06\
+         23 |               6 | Grushi       |            827 |             4 | 2022-04-18 12:49:56.21801+06\
+         25 |               3 | Snikers      |            890 |             3 | 2022-04-18 12:49:56.21801+06\
+         26 |               5 | Pomidori     |            294 |             4 | 2022-04-18 12:49:56.21801+06\
+         27 |               6 | Yabloki      |            254 |             4 | 2022-04-18 12:49:56.21801+06\
+         28 |               4 | Kaniyak      |            766 |             4 | 2022-04-18 12:49:56.21801+06\
+         29 |               5 | Redka        |            940 |            10 | 2022-04-18 12:49:56.21801+06\
+         30 |               5 | Tikva        |            990 |             7 | 2022-04-18 12:49:56.21801+06\
+         31 |               5 | Baklajani    |            481 |             2 | 2022-04-18 12:49:56.21801+06\
+         32 |               1 | Kaimak       |            304 |             2 | 2022-04-18 12:49:56.21801+06\
+         34 |               5 | Kartoshka    |            786 |             5 | 2022-04-18 12:49:56.21801+06\
+         35 |               1 | Airan        |            425 |             2 | 2022-04-18 12:49:56.21801+06\
+         36 |               6 | Bananni      |            758 |             4 | 2022-04-18 12:49:56.21801+06\
+marketing=# SELECT * FROM globus LEFT JOIN narodnii ON globus.product_name = narodnii.product_name AND globus.date_delivered = narodnii.date_delivered;\
+ product_id | product_type_id | product_name | product_amount | day_to_expire | date_delivered | product_id | product_type_id | product_name | product_amount | day_to_expire | date_delivered \
+------------+-----------------+--------------+----------------+---------------+----------------+------------+-----------------+--------------+----------------+---------------+----------------\
+(0 rows)\
+\
+marketing=# SELECT globus.product_name, globus.date_delivered FROM globus LEFT JOIN narodnii ON globus.date_delivered = narodnii.date_delivered;\
+ product_name | date_delivered \
+--------------+----------------\
+(0 rows)\
+\
+marketing=# SELECT globus.product_name FROM globus LEFT JOIN narodnii ON globus.product_name = narodnii.product_name;\
+ product_name \
+--------------\
+(0 rows)\
+\
+marketing=# SELECT globus.product_id FROM globus LEFT JOIN narodnii ON globus.product_name = narodnii.product_name;\
+ product_id \
+------------\
+(0 rows)\
+\
+marketing=# SELECT globus.product_name FROM globus RIGHT JOIN narodnii ON globus.product_name = narodnii.product_name;\
+ product_name \
+--------------\
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+marketing=# SELECT globus.product_name FROM globus FULL OUTER JOIN narodnii ON globus.product_name = narodnii.product_name;\
+ product_name \
+--------------\
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+marketing=# SELECT globus.product_name FROM globus FULL OUTER JOIN narodnii ON globus.product_amount = narodnii.product_amount;\
+ product_name \
+--------------\
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+ \
+marketing=# SELECT globus.product_name FROM globus INNER JOIN narodnii ON globus.product_amount = narodnii.product_amount;\
+ product_name \
+--------------\
+(0 rows)\
+\
+marketing=# SELECT globus.product_name FROM globus LEFT JOIN narodnii ON globus.product_amount = narodnii.product_amount;\
+ product_name \
+--------------\
+(0 rows)\
+\
+marketing=# SELECT * FROM globus WHERE product_name LIKE '%a' OR product_name LIKE '%b' OR product_name LIKE '%c' OR product_name LIKE '%d' OR product_name LIKE '%e' OR product_name LIKE '%f' OR product_name LIKE '%g' OR product_name LIKE '%h';\
+ product_id | product_type_id | product_name | product_amount | day_to_expire | date_delivered \
+------------+-----------------+--------------+----------------+---------------+----------------\
+(0 rows)}
