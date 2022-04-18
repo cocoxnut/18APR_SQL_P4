@@ -1,0 +1,1559 @@
+{\rtf1\ansi\ansicpg1251\cocoartf2638
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red59\green189\blue255;}
+{\*\expandedcolortbl;;\csgray\c0;\cssrgb\c27267\c78870\c100000;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww23660\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \CocoaLigature0 \
+instagram=# COUNT(user_id) from users;\
+ERROR:  syntax error at or near "COUNT"\
+LINE 1: COUNT(user_id) from users;\
+        ^\
+instagram=# select COUNT(user_id) from users;\
+ count \
+-------\
+ 10000\
+(1 row)\
+\
+instagram=# SELECT login, followers from users WHERE followers = MAX(followers);\
+ERROR:  aggregate functions are not allowed in WHERE\
+LINE 1: ...ECT login, followers from users WHERE followers = MAX(follow...\
+                                                             ^\
+instagram=# SELECT login, max(followers) from users;\
+ERROR:  column "users.login" must appear in the GROUP BY clause or be used in an aggregate function\
+LINE 1: SELECT login, max(followers) from users;\
+               ^\
+instagram=# SELECT login, max(followers) from users GROUP BY login;\
+   login    |   max   \
+------------+---------\
+ Lily       | 9827176\
+ Sophia     | 9855482\
+ Poppy      | 9969069\
+ Aibek      | 9948897\
+ Joseph     | 9984438\
+ Joe        | 9855741\
+ Thomas     | 9984438\
+ Jennifer   | 9979961\
+ Liam       | 9771215\
+ Jacob      | 9977068\
+ Linda      | 9891707\
+ Victoria   | 9790488\
+ Reece      | 9897365\
+ Connor     | 9930127\
+ Konstantin | 9903294\
+ Charles    | 9932869\
+ Susan      | 9948897\
+ user_user  | 9996619\
+ Isla       | 9977977\
+ Michael    | 9998005\
+ Mary       | 9810808\
+ Sultan     | 9998606\
+ Margaret   | 9911205\
+ Damian     | 9857515\
+ Jessica    | 9998606\
+ Daniyar    | 9669969\
+ William    | 9884109\
+ Samantha   | 9932598\
+ Charlie    | 9964580\
+ qwerty     | 9969069\
+ Kyle       | 9998606\
+ John       | 9807054\
+instagram=# \
+instagram=# SELECT * from users GROUP BY login HAVING followers > 90000;\
+ERROR:  column "users.user_id" must appear in the GROUP BY clause or be used in an aggregate function\
+LINE 1: SELECT * from users GROUP BY login HAVING followers > 90000;\
+               ^\
+instagram=# SELECT * FROM users WHERE followers = (SELECT MAX(followers) from users)\
+instagram-# ;\
+ user_id |   login   |    password     |        email        | phone_number  | country |    address    |                 profession                 | followers \
+---------+-----------+-----------------+---------------------+---------------+---------+---------------+--------------------------------------------+-----------\
+    2115 | Jessica   | SjuulYiXFEj209x | charlotte@mail.ru   | +996506610463 | Bolivia | Chui 493      | Technical Specialist                       |   9998606\
+    5100 | Kyle      | 1Gd8PDNkRxdHKLZ | william@outlook.com | +996555230103 | Tuvalu  | Ahunbaeva 104 | Network and Computer Systems Administrator |   9998606\
+    9874 | Alexander | KPnbjWtHy       | isabella@bk.ru      | +996501460270 | Tuvalu  | Sovetskaya 71 | Network and Computer Systems Administrator |   9998606\
+    7033 | Sultan    | xL9hUlbhg8xLE   | kyle@gmail.com      | 000000000000  | Bhutan  | Pravda 40     | Database Administrator                     |   9998606\
+(4 rows)\
+\
+instagram=# SELECT login, AVG(followers) FROM users;\
+ERROR:  column "users.login" must appear in the GROUP BY clause or be used in an aggregate function\
+LINE 1: SELECT login, AVG(followers) FROM users;\
+               ^\
+instagram=# SELECT AVG(followers), login from users; \
+ERROR:  column "users.login" must appear in the GROUP BY clause or be used in an aggregate function\
+LINE 1: SELECT AVG(followers), login from users;\
+                               ^\
+instagram=# SELECT login, AVG(followers) FROM users GROUP BY login;\
+   login    |         avg          \
+------------+----------------------\
+ Lily       | 4605067.876288659794\
+ Sophia     | 4350729.314516129032\
+ Poppy      | 4670689.306818181818\
+ Aibek      | 4827720.497536945813\
+ Joseph     | 4869055.810000000000\
+ Joe        | 5711995.544444444444\
+ Thomas     | 4645723.272727272727\
+ Jennifer   | 4752186.280373831776\
+ Liam       | 5177020.333333333333\
+ Jacob      | 4867786.688524590164\
+ Linda      | 4852845.212962962963\
+ Victoria   | 4770071.900000000000\
+ Reece      | 4956184.776699029126\
+ Connor     | 5006439.058823529412\
+ Konstantin | 5010599.828947368421\
+ Charles    | 4843394.773195876289\
+ Susan      | 5317859.947368421053\
+ user_user  | 5231967.672131147541\
+ Isla       | 5061177.155339805825\
+ Michael    | 4806804.165745856354\
+ Mary       | 4686661.208333333333\
+ Sultan     | 5131876.540816326531\
+ Margaret   | 4980725.157407407407\
+ Damian     | 5107471.000000000000\
+ Jessica    | 4827402.401098901099\
+ Daniyar    | 4519982.418181818182\
+ William    | 4956714.032154340836\
+ Samantha   | 4742889.138613861386\
+ Charlie    | 5111384.139175257732\
+ qwerty     | 5033946.021505376344\
+ Kyle       | 4682532.326086956522\
+ John       | 4954528.564356435644\
+instagram=# SELECT * FROM users ORDER BY login;\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+    2091 | Abigail    | I391VJV5        | qwerty@outlook.com    | +996999210625 | Sao Tome and Principe            | Toktogula 364   | Junior Software Engineer                    |   1146463\
+    2730 | Abigail    | Tk5uJJRYQcD38s  | mia@mail.ru           | +996776640156 | Austria                          | Chui 372        | Software Developer                          |   5061414\
+    4593 | Abigail    | rlFekKRbXR      | oliver@outlook.com    | +996707192049 | Gambia                           | Mederova 203    | Technical Support Engineer                  |   6812909\
+    3142 | Abigail    | VYRrlncSa       | richard@outlook.com   | +996554693809 | Japan                            | Pravda 282      | Senior Support Specialist                   |    299352\
+    1181 | Abigail    | Cx6ye5SeXH1lQJ  | daniel@mail.ru        | +996773353587 | Mali                             | Jibek-Jolu 67   | Telecommunications Specialist               |   9343628\
+    4901 | Abigail    | qwerty          | elizabeth@bk.ru       | 000000000000  | Grenada                          | Moskovskaya 150 | Network Architect                           |   9510489\
+    8421 | Abigail    | qwerty          | noah@gmail.com        | +996773617038 | Switzerland                      | Razakova 315    | Applications Engineer                       |   4798506\
+    7407 | Abigail    | qwerty          | george@outlook.com    | +996501875778 | Norway                           | Moskovskaya 351 | Help Desk Specialist                        |   1899487\
+    8324 | Abigail    | LEy2S2OrJ9a2Miw | george@outlook.com    | +996992816696 | Israel                           | Manasa 201      | Technical Support Engineer                  |    688579\
+    4711 | Abigail    | qwerty          | daniel@mail.ru        | +996994223928 | Panama                           | Moskovskaya 412 | Cloud Architect                             |   8890990\
+    9218 | Abigail    | uNrwHqugDu      | alexander@outlook.com | +996992826599 | Tanzania                         | Mederova 24     | Cloud Services Developer                    |    157397\
+    3311 | Abigail    | 3l1nxh2uwwSgOS  | charlie@gmail.com     | +996779456616 | Guinea-Bissau                    | Erkindik 104    | Network Engineer                            |   9392880\
+    4543 | Abigail    | oC5w1ekqHMnlBC0 | liazat@gmail.com      | 000000000000  | North Macedonia                  | Chui 429        | Senior Applications Engineer                |   8196452\
+    4149 | Abigail    | qwerty          | ethan@gmail.com       | +996773715486 | Guatemala                        | Razakova 12     | Computer and Information Research Scientist |   1462087\
+    8599 | Abigail    | U3owhDKZuUq0xw  | rhys@mail.ru          | +996704254479 | Latvia                           | Jibek-Jolu 276  | Network Administrator                       |   9062196\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+    2091 | Abigail    | I391VJV5        | qwerty@outlook.com    | +996999210625 | Sao Tome and Principe            | Toktogula 364   | Junior Software Engineer                    |   1146463\
+    2730 | Abigail    | Tk5uJJRYQcD38s  | mia@mail.ru           | +996776640156 | Austria                          | Chui 372        | Software Developer                          |   5061414\
+    4593 | Abigail    | rlFekKRbXR      | oliver@outlook.com    | +996707192049 | Gambia                           | Mederova 203    | Technical Support Engineer                  |   6812909\
+    3142 | Abigail    | VYRrlncSa       | richard@outlook.com   | +996554693809 | Japan                            | Pravda 282      | Senior Support Specialist                   |    299352\
+    1181 | Abigail    | Cx6ye5SeXH1lQJ  | daniel@mail.ru        | +996773353587 | Mali                             | Jibek-Jolu 67   | Telecommunications Specialist               |   9343628\
+    4901 | Abigail    | qwerty          | elizabeth@bk.ru       | 000000000000  | Grenada                          | Moskovskaya 150 | Network Architect                           |   9510489\
+    8421 | Abigail    | qwerty          | noah@gmail.com        | +996773617038 | Switzerland                      | Razakova 315    | Applications Engineer                       |   4798506\
+    7407 | Abigail    | qwerty          | george@outlook.com    | +996501875778 | Norway                           | Moskovskaya 351 | Help Desk Specialist                        |   1899487\
+    8324 | Abigail    | LEy2S2OrJ9a2Miw | george@outlook.com    | +996992816696 | Israel                           | Manasa 201      | Technical Support Engineer                  |    688579\
+    4711 | Abigail    | qwerty          | daniel@mail.ru        | +996994223928 | Panama                           | Moskovskaya 412 | Cloud Architect                             |   8890990\
+    9218 | Abigail    | uNrwHqugDu      | alexander@outlook.com | +996992826599 | Tanzania                         | Mederova 24     | Cloud Services Developer                    |    157397\
+    3311 | Abigail    | 3l1nxh2uwwSgOS  | charlie@gmail.com     | +996779456616 | Guinea-Bissau                    | Erkindik 104    | Network Engineer                            |   9392880\
+    4543 | Abigail    | oC5w1ekqHMnlBC0 | liazat@gmail.com      | 000000000000  | North Macedonia                  | Chui 429        | Senior Applications Engineer                |   8196452\
+    4149 | Abigail    | qwerty          | ethan@gmail.com       | +996773715486 | Guatemala                        | Razakova 12     | Computer and Information Research Scientist |   1462087\
+    8599 | Abigail    | U3owhDKZuUq0xw  | rhys@mail.ru          | +996704254479 | Latvia                           | Jibek-Jolu 276  | Network Administrator                       |   9062196\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+    2091 | Abigail    | I391VJV5        | qwerty@outlook.com    | +996999210625 | Sao Tome and Principe            | Toktogula 364   | Junior Software Engineer                    |   1146463\
+    2730 | Abigail    | Tk5uJJRYQcD38s  | mia@mail.ru           | +996776640156 | Austria                          | Chui 372        | Software Developer                          |   5061414\
+    4593 | Abigail    | rlFekKRbXR      | oliver@outlook.com    | +996707192049 | Gambia                           | Mederova 203    | Technical Support Engineer                  |   6812909\
+    3142 | Abigail    | VYRrlncSa       | richard@outlook.com   | +996554693809 | Japan                            | Pravda 282      | Senior Support Specialist                   |    299352\
+    1181 | Abigail    | Cx6ye5SeXH1lQJ  | daniel@mail.ru        | +996773353587 | Mali                             | Jibek-Jolu 67   | Telecommunications Specialist               |   9343628\
+    4901 | Abigail    | qwerty          | elizabeth@bk.ru       | 000000000000  | Grenada                          | Moskovskaya 150 | Network Architect                           |   9510489\
+    8421 | Abigail    | qwerty          | noah@gmail.com        | +996773617038 | Switzerland                      | Razakova 315    | Applications Engineer                       |   4798506\
+    7407 | Abigail    | qwerty          | george@outlook.com    | +996501875778 | Norway                           | Moskovskaya 351 | Help Desk Specialist                        |   1899487\
+    8324 | Abigail    | LEy2S2OrJ9a2Miw | george@outlook.com    | +996992816696 | Israel                           | Manasa 201      | Technical Support Engineer                  |    688579\
+    4711 | Abigail    | qwerty          | daniel@mail.ru        | +996994223928 | Panama                           | Moskovskaya 412 | Cloud Architect                             |   8890990\
+    9218 | Abigail    | uNrwHqugDu      | alexander@outlook.com | +996992826599 | Tanzania                         | Mederova 24     | Cloud Services Developer                    |    157397\
+    3311 | Abigail    | 3l1nxh2uwwSgOS  | charlie@gmail.com     | +996779456616 | Guinea-Bissau                    | Erkindik 104    | Network Engineer                            |   9392880\
+    4543 | Abigail    | oC5w1ekqHMnlBC0 | liazat@gmail.com      | 000000000000  | North Macedonia                  | Chui 429        | Senior Applications Engineer                |   8196452\
+    4149 | Abigail    | qwerty          | ethan@gmail.com       | +996773715486 | Guatemala                        | Razakova 12     | Computer and Information Research Scientist |   1462087\
+    8599 | Abigail    | U3owhDKZuUq0xw  | rhys@mail.ru          | +996704254479 | Latvia                           | Jibek-Jolu 276  | Network Administrator                       |   9062196\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+    2091 | Abigail    | I391VJV5        | qwerty@outlook.com    | +996999210625 | Sao Tome and Principe            | Toktogula 364   | Junior Software Engineer                    |   1146463\
+    2730 | Abigail    | Tk5uJJRYQcD38s  | mia@mail.ru           | +996776640156 | Austria                          | Chui 372        | Software Developer                          |   5061414\
+    4593 | Abigail    | rlFekKRbXR      | oliver@outlook.com    | +996707192049 | Gambia                           | Mederova 203    | Technical Support Engineer                  |   6812909\
+    3142 | Abigail    | VYRrlncSa       | richard@outlook.com   | +996554693809 | Japan                            | Pravda 282      | Senior Support Specialist                   |    299352\
+    1181 | Abigail    | Cx6ye5SeXH1lQJ  | daniel@mail.ru        | +996773353587 | Mali                             | Jibek-Jolu 67   | Telecommunications Specialist               |   9343628\
+    4901 | Abigail    | qwerty          | elizabeth@bk.ru       | 000000000000  | Grenada                          | Moskovskaya 150 | Network Architect                           |   9510489\
+    8421 | Abigail    | qwerty          | noah@gmail.com        | +996773617038 | Switzerland                      | Razakova 315    | Applications Engineer                       |   4798506\
+    7407 | Abigail    | qwerty          | george@outlook.com    | +996501875778 | Norway                           | Moskovskaya 351 | Help Desk Specialist                        |   1899487\
+    8324 | Abigail    | LEy2S2OrJ9a2Miw | george@outlook.com    | +996992816696 | Israel                           | Manasa 201      | Technical Support Engineer                  |    688579\
+    4711 | Abigail    | qwerty          | daniel@mail.ru        | +996994223928 | Panama                           | Moskovskaya 412 | Cloud Architect                             |   8890990\
+    9218 | Abigail    | uNrwHqugDu      | alexander@outlook.com | +996992826599 | Tanzania                         | Mederova 24     | Cloud Services Developer                    |    157397\
+    3311 | Abigail    | 3l1nxh2uwwSgOS  | charlie@gmail.com     | +996779456616 | Guinea-Bissau                    | Erkindik 104    | Network Engineer                            |   9392880\
+    4543 | Abigail    | oC5w1ekqHMnlBC0 | liazat@gmail.com      | 000000000000  | North Macedonia                  | Chui 429        | Senior Applications Engineer                |   8196452\
+    4149 | Abigail    | qwerty          | ethan@gmail.com       | +996773715486 | Guatemala                        | Razakova 12     | Computer and Information Research Scientist |   1462087\
+    8599 | Abigail    | U3owhDKZuUq0xw  | rhys@mail.ru          | +996704254479 | Latvia                           | Jibek-Jolu 276  | Network Administrator                       |   9062196\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+    2091 | Abigail    | I391VJV5        | qwerty@outlook.com    | +996999210625 | Sao Tome and Principe            | Toktogula 364   | Junior Software Engineer                    |   1146463\
+    2730 | Abigail    | Tk5uJJRYQcD38s  | mia@mail.ru           | +996776640156 | Austria                          | Chui 372        | Software Developer                          |   5061414\
+    4593 | Abigail    | rlFekKRbXR      | oliver@outlook.com    | +996707192049 | Gambia                           | Mederova 203    | Technical Support Engineer                  |   6812909\
+    3142 | Abigail    | VYRrlncSa       | richard@outlook.com   | +996554693809 | Japan                            | Pravda 282      | Senior Support Specialist                   |    299352\
+    1181 | Abigail    | Cx6ye5SeXH1lQJ  | daniel@mail.ru        | +996773353587 | Mali                             | Jibek-Jolu 67   | Telecommunications Specialist               |   9343628\
+    4901 | Abigail    | qwerty          | elizabeth@bk.ru       | 000000000000  | Grenada                          | Moskovskaya 150 | Network Architect                           |   9510489\
+    8421 | Abigail    | qwerty          | noah@gmail.com        | +996773617038 | Switzerland                      | Razakova 315    | Applications Engineer                       |   4798506\
+    7407 | Abigail    | qwerty          | george@outlook.com    | +996501875778 | Norway                           | Moskovskaya 351 | Help Desk Specialist                        |   1899487\
+    8324 | Abigail    | LEy2S2OrJ9a2Miw | george@outlook.com    | +996992816696 | Israel                           | Manasa 201      | Technical Support Engineer                  |    688579\
+    4711 | Abigail    | qwerty          | daniel@mail.ru        | +996994223928 | Panama                           | Moskovskaya 412 | Cloud Architect                             |   8890990\
+    9218 | Abigail    | uNrwHqugDu      | alexander@outlook.com | +996992826599 | Tanzania                         | Mederova 24     | Cloud Services Developer                    |    157397\
+    3311 | Abigail    | 3l1nxh2uwwSgOS  | charlie@gmail.com     | +996779456616 | Guinea-Bissau                    | Erkindik 104    | Network Engineer                            |   9392880\
+    4543 | Abigail    | oC5w1ekqHMnlBC0 | liazat@gmail.com      | 000000000000  | North Macedonia                  | Chui 429        | Senior Applications Engineer                |   8196452\
+    4149 | Abigail    | qwerty          | ethan@gmail.com       | +996773715486 | Guatemala                        | Razakova 12     | Computer and Information Research Scientist |   1462087\
+    8599 | Abigail    | U3owhDKZuUq0xw  | rhys@mail.ru          | +996704254479 | Latvia                           | Jibek-Jolu 276  | Network Administrator                       |   9062196\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+    2091 | Abigail    | I391VJV5        | qwerty@outlook.com    | +996999210625 | Sao Tome and Principe            | Toktogula 364   | Junior Software Engineer                    |   1146463\
+    2730 | Abigail    | Tk5uJJRYQcD38s  | mia@mail.ru           | +996776640156 | Austria                          | Chui 372        | Software Developer                          |   5061414\
+    4593 | Abigail    | rlFekKRbXR      | oliver@outlook.com    | +996707192049 | Gambia                           | Mederova 203    | Technical Support Engineer                  |   6812909\
+    3142 | Abigail    | VYRrlncSa       | richard@outlook.com   | +996554693809 | Japan                            | Pravda 282      | Senior Support Specialist                   |    299352\
+    1181 | Abigail    | Cx6ye5SeXH1lQJ  | daniel@mail.ru        | +996773353587 | Mali                             | Jibek-Jolu 67   | Telecommunications Specialist               |   9343628\
+    4901 | Abigail    | qwerty          | elizabeth@bk.ru       | 000000000000  | Grenada                          | Moskovskaya 150 | Network Architect                           |   9510489\
+    8421 | Abigail    | qwerty          | noah@gmail.com        | +996773617038 | Switzerland                      | Razakova 315    | Applications Engineer                       |   4798506\
+    7407 | Abigail    | qwerty          | george@outlook.com    | +996501875778 | Norway                           | Moskovskaya 351 | Help Desk Specialist                        |   1899487\
+    8324 | Abigail    | LEy2S2OrJ9a2Miw | george@outlook.com    | +996992816696 | Israel                           | Manasa 201      | Technical Support Engineer                  |    688579\
+    4711 | Abigail    | qwerty          | daniel@mail.ru        | +996994223928 | Panama                           | Moskovskaya 412 | Cloud Architect                             |   8890990\
+    9218 | Abigail    | uNrwHqugDu      | alexander@outlook.com | +996992826599 | Tanzania                         | Mederova 24     | Cloud Services Developer                    |    157397\
+    3311 | Abigail    | 3l1nxh2uwwSgOS  | charlie@gmail.com     | +996779456616 | Guinea-Bissau                    | Erkindik 104    | Network Engineer                            |   9392880\
+    4543 | Abigail    | oC5w1ekqHMnlBC0 | liazat@gmail.com      | 000000000000  | North Macedonia                  | Chui 429        | Senior Applications Engineer                |   8196452\
+    4149 | Abigail    | qwerty          | ethan@gmail.com       | +996773715486 | Guatemala                        | Razakova 12     | Computer and Information Research Scientist |   1462087\
+    8599 | Abigail    | U3owhDKZuUq0xw  | rhys@mail.ru          | +996704254479 | Latvia                           | Jibek-Jolu 276  | Network Administrator                       |   9062196\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+    2091 | Abigail    | I391VJV5        | qwerty@outlook.com    | +996999210625 | Sao Tome and Principe            | Toktogula 364   | Junior Software Engineer                    |   1146463\
+    2730 | Abigail    | Tk5uJJRYQcD38s  | mia@mail.ru           | +996776640156 | Austria                          | Chui 372        | Software Developer                          |   5061414\
+    4593 | Abigail    | rlFekKRbXR      | oliver@outlook.com    | +996707192049 | Gambia                           | Mederova 203    | Technical Support Engineer                  |   6812909\
+    3142 | Abigail    | VYRrlncSa       | richard@outlook.com   | +996554693809 | Japan                            | Pravda 282      | Senior Support Specialist                   |    299352\
+    1181 | Abigail    | Cx6ye5SeXH1lQJ  | daniel@mail.ru        | +996773353587 | Mali                             | Jibek-Jolu 67   | Telecommunications Specialist               |   9343628\
+    4901 | Abigail    | qwerty          | elizabeth@bk.ru       | 000000000000  | Grenada                          | Moskovskaya 150 | Network Architect                           |   9510489\
+    8421 | Abigail    | qwerty          | noah@gmail.com        | +996773617038 | Switzerland                      | Razakova 315    | Applications Engineer                       |   4798506\
+    7407 | Abigail    | qwerty          | george@outlook.com    | +996501875778 | Norway                           | Moskovskaya 351 | Help Desk Specialist                        |   1899487\
+    8324 | Abigail    | LEy2S2OrJ9a2Miw | george@outlook.com    | +996992816696 | Israel                           | Manasa 201      | Technical Support Engineer                  |    688579\
+    4711 | Abigail    | qwerty          | daniel@mail.ru        | +996994223928 | Panama                           | Moskovskaya 412 | Cloud Architect                             |   8890990\
+    9218 | Abigail    | uNrwHqugDu      | alexander@outlook.com | +996992826599 | Tanzania                         | Mederova 24     | Cloud Services Developer                    |    157397\
+    3311 | Abigail    | 3l1nxh2uwwSgOS  | charlie@gmail.com     | +996779456616 | Guinea-Bissau                    | Erkindik 104    | Network Engineer                            |   9392880\
+    4543 | Abigail    | oC5w1ekqHMnlBC0 | liazat@gmail.com      | 000000000000  | North Macedonia                  | Chui 429        | Senior Applications Engineer                |   8196452\
+    4149 | Abigail    | qwerty          | ethan@gmail.com       | +996773715486 | Guatemala                        | Razakova 12     | Computer and Information Research Scientist |   1462087\
+    8599 | Abigail    | U3owhDKZuUq0xw  | rhys@mail.ru          | +996704254479 | Latvia                           | Jibek-Jolu 276  | Network Administrator                       |   9062196\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+    2091 | Abigail    | I391VJV5        | qwerty@outlook.com    | +996999210625 | Sao Tome and Principe            | Toktogula 364   | Junior Software Engineer                    |   1146463\
+    2730 | Abigail    | Tk5uJJRYQcD38s  | mia@mail.ru           | +996776640156 | Austria                          | Chui 372        | Software Developer                          |   5061414\
+    4593 | Abigail    | rlFekKRbXR      | oliver@outlook.com    | +996707192049 | Gambia                           | Mederova 203    | Technical Support Engineer                  |   6812909\
+    3142 | Abigail    | VYRrlncSa       | richard@outlook.com   | +996554693809 | Japan                            | Pravda 282      | Senior Support Specialist                   |    299352\
+    1181 | Abigail    | Cx6ye5SeXH1lQJ  | daniel@mail.ru        | +996773353587 | Mali                             | Jibek-Jolu 67   | Telecommunications Specialist               |   9343628\
+    4901 | Abigail    | qwerty          | elizabeth@bk.ru       | 000000000000  | Grenada                          | Moskovskaya 150 | Network Architect                           |   9510489\
+    8421 | Abigail    | qwerty          | noah@gmail.com        | +996773617038 | Switzerland                      | Razakova 315    | Applications Engineer                       |   4798506\
+    7407 | Abigail    | qwerty          | george@outlook.com    | +996501875778 | Norway                           | Moskovskaya 351 | Help Desk Specialist                        |   1899487\
+    8324 | Abigail    | LEy2S2OrJ9a2Miw | george@outlook.com    | +996992816696 | Israel                           | Manasa 201      | Technical Support Engineer                  |    688579\
+    4711 | Abigail    | qwerty          | daniel@mail.ru        | +996994223928 | Panama                           | Moskovskaya 412 | Cloud Architect                             |   8890990\
+    9218 | Abigail    | uNrwHqugDu      | alexander@outlook.com | +996992826599 | Tanzania                         | Mederova 24     | Cloud Services Developer                    |    157397\
+    3311 | Abigail    | 3l1nxh2uwwSgOS  | charlie@gmail.com     | +996779456616 | Guinea-Bissau                    | Erkindik 104    | Network Engineer                            |   9392880\
+    4543 | Abigail    | oC5w1ekqHMnlBC0 | liazat@gmail.com      | 000000000000  | North Macedonia                  | Chui 429        | Senior Applications Engineer                |   8196452\
+    4149 | Abigail    | qwerty          | ethan@gmail.com       | +996773715486 | Guatemala                        | Razakova 12     | Computer and Information Research Scientist |   1462087\
+    8599 | Abigail    | U3owhDKZuUq0xw  | rhys@mail.ru          | +996704254479 | Latvia                           | Jibek-Jolu 276  | Network Administrator                       |   9062196\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+    2091 | Abigail    | I391VJV5        | qwerty@outlook.com    | +996999210625 | Sao Tome and Principe            | Toktogula 364   | Junior Software Engineer                    |   1146463\
+    2730 | Abigail    | Tk5uJJRYQcD38s  | mia@mail.ru           | +996776640156 | Austria                          | Chui 372        | Software Developer                          |   5061414\
+    4593 | Abigail    | rlFekKRbXR      | oliver@outlook.com    | +996707192049 | Gambia                           | Mederova 203    | Technical Support Engineer                  |   6812909\
+    3142 | Abigail    | VYRrlncSa       | richard@outlook.com   | +996554693809 | Japan                            | Pravda 282      | Senior Support Specialist                   |    299352\
+    1181 | Abigail    | Cx6ye5SeXH1lQJ  | daniel@mail.ru        | +996773353587 | Mali                             | Jibek-Jolu 67   | Telecommunications Specialist               |   9343628\
+    4901 | Abigail    | qwerty          | elizabeth@bk.ru       | 000000000000  | Grenada                          | Moskovskaya 150 | Network Architect                           |   9510489\
+    8421 | Abigail    | qwerty          | noah@gmail.com        | +996773617038 | Switzerland                      | Razakova 315    | Applications Engineer                       |   4798506\
+    7407 | Abigail    | qwerty          | george@outlook.com    | +996501875778 | Norway                           | Moskovskaya 351 | Help Desk Specialist                        |   1899487\
+    8324 | Abigail    | LEy2S2OrJ9a2Miw | george@outlook.com    | +996992816696 | Israel                           | Manasa 201      | Technical Support Engineer                  |    688579\
+    4711 | Abigail    | qwerty          | daniel@mail.ru        | +996994223928 | Panama                           | Moskovskaya 412 | Cloud Architect                             |   8890990\
+    9218 | Abigail    | uNrwHqugDu      | alexander@outlook.com | +996992826599 | Tanzania                         | Mederova 24     | Cloud Services Developer                    |    157397\
+    3311 | Abigail    | 3l1nxh2uwwSgOS  | charlie@gmail.com     | +996779456616 | Guinea-Bissau                    | Erkindik 104    | Network Engineer                            |   9392880\
+    4543 | Abigail    | oC5w1ekqHMnlBC0 | liazat@gmail.com      | 000000000000  | North Macedonia                  | Chui 429        | Senior Applications Engineer                |   8196452\
+    4149 | Abigail    | qwerty          | ethan@gmail.com       | +996773715486 | Guatemala                        | Razakova 12     | Computer and Information Research Scientist |   1462087\
+    8599 | Abigail    | U3owhDKZuUq0xw  | rhys@mail.ru          | +996704254479 | Latvia                           | Jibek-Jolu 276  | Network Administrator                       |   9062196\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+    2091 | Abigail    | I391VJV5        | qwerty@outlook.com    | +996999210625 | Sao Tome and Principe            | Toktogula 364   | Junior Software Engineer                    |   1146463\
+    2730 | Abigail    | Tk5uJJRYQcD38s  | mia@mail.ru           | +996776640156 | Austria                          | Chui 372        | Software Developer                          |   5061414\
+    4593 | Abigail    | rlFekKRbXR      | oliver@outlook.com    | +996707192049 | Gambia                           | Mederova 203    | Technical Support Engineer                  |   6812909\
+    3142 | Abigail    | VYRrlncSa       | richard@outlook.com   | +996554693809 | Japan                            | Pravda 282      | Senior Support Specialist                   |    299352\
+    1181 | Abigail    | Cx6ye5SeXH1lQJ  | daniel@mail.ru        | +996773353587 | Mali                             | Jibek-Jolu 67   | Telecommunications Specialist               |   9343628\
+    4901 | Abigail    | qwerty          | elizabeth@bk.ru       | 000000000000  | Grenada                          | Moskovskaya 150 | Network Architect                           |   9510489\
+    8421 | Abigail    | qwerty          | noah@gmail.com        | +996773617038 | Switzerland                      | Razakova 315    | Applications Engineer                       |   4798506\
+    7407 | Abigail    | qwerty          | george@outlook.com    | +996501875778 | Norway                           | Moskovskaya 351 | Help Desk Specialist                        |   1899487\
+    8324 | Abigail    | LEy2S2OrJ9a2Miw | george@outlook.com    | +996992816696 | Israel                           | Manasa 201      | Technical Support Engineer                  |    688579\
+    4711 | Abigail    | qwerty          | daniel@mail.ru        | +996994223928 | Panama                           | Moskovskaya 412 | Cloud Architect                             |   8890990\
+    9218 | Abigail    | uNrwHqugDu      | alexander@outlook.com | +996992826599 | Tanzania                         | Mederova 24     | Cloud Services Developer                    |    157397\
+    3311 | Abigail    | 3l1nxh2uwwSgOS  | charlie@gmail.com     | +996779456616 | Guinea-Bissau                    | Erkindik 104    | Network Engineer                            |   9392880\
+    4543 | Abigail    | oC5w1ekqHMnlBC0 | liazat@gmail.com      | 000000000000  | North Macedonia                  | Chui 429        | Senior Applications Engineer                |   8196452\
+    4149 | Abigail    | qwerty          | ethan@gmail.com       | +996773715486 | Guatemala                        | Razakova 12     | Computer and Information Research Scientist |   1462087\
+    8599 | Abigail    | U3owhDKZuUq0xw  | rhys@mail.ru          | +996704254479 | Latvia                           | Jibek-Jolu 276  | Network Administrator                       |   9062196\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+    2091 | Abigail    | I391VJV5        | qwerty@outlook.com    | +996999210625 | Sao Tome and Principe            | Toktogula 364   | Junior Software Engineer                    |   1146463\
+    2730 | Abigail    | Tk5uJJRYQcD38s  | mia@mail.ru           | +996776640156 | Austria                          | Chui 372        | Software Developer                          |   5061414\
+    4593 | Abigail    | rlFekKRbXR      | oliver@outlook.com    | +996707192049 | Gambia                           | Mederova 203    | Technical Support Engineer                  |   6812909\
+    3142 | Abigail    | VYRrlncSa       | richard@outlook.com   | +996554693809 | Japan                            | Pravda 282      | Senior Support Specialist                   |    299352\
+    1181 | Abigail    | Cx6ye5SeXH1lQJ  | daniel@mail.ru        | +996773353587 | Mali                             | Jibek-Jolu 67   | Telecommunications Specialist               |   9343628\
+    4901 | Abigail    | qwerty          | elizabeth@bk.ru       | 000000000000  | Grenada                          | Moskovskaya 150 | Network Architect                           |   9510489\
+    8421 | Abigail    | qwerty          | noah@gmail.com        | +996773617038 | Switzerland                      | Razakova 315    | Applications Engineer                       |   4798506\
+    7407 | Abigail    | qwerty          | george@outlook.com    | +996501875778 | Norway                           | Moskovskaya 351 | Help Desk Specialist                        |   1899487\
+    8324 | Abigail    | LEy2S2OrJ9a2Miw | george@outlook.com    | +996992816696 | Israel                           | Manasa 201      | Technical Support Engineer                  |    688579\
+    4711 | Abigail    | qwerty          | daniel@mail.ru        | +996994223928 | Panama                           | Moskovskaya 412 | Cloud Architect                             |   8890990\
+    9218 | Abigail    | uNrwHqugDu      | alexander@outlook.com | +996992826599 | Tanzania                         | Mederova 24     | Cloud Services Developer                    |    157397\
+    3311 | Abigail    | 3l1nxh2uwwSgOS  | charlie@gmail.com     | +996779456616 | Guinea-Bissau                    | Erkindik 104    | Network Engineer                            |   9392880\
+    4543 | Abigail    | oC5w1ekqHMnlBC0 | liazat@gmail.com      | 000000000000  | North Macedonia                  | Chui 429        | Senior Applications Engineer                |   8196452\
+    4149 | Abigail    | qwerty          | ethan@gmail.com       | +996773715486 | Guatemala                        | Razakova 12     | Computer and Information Research Scientist |   1462087\
+    8599 | Abigail    | U3owhDKZuUq0xw  | rhys@mail.ru          | +996704254479 | Latvia                           | Jibek-Jolu 276  | Network Administrator                       |   9062196\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+    2091 | Abigail    | I391VJV5        | qwerty@outlook.com    | +996999210625 | Sao Tome and Principe            | Toktogula 364   | Junior Software Engineer                    |   1146463\
+    2730 | Abigail    | Tk5uJJRYQcD38s  | mia@mail.ru           | +996776640156 | Austria                          | Chui 372        | Software Developer                          |   5061414\
+    4593 | Abigail    | rlFekKRbXR      | oliver@outlook.com    | +996707192049 | Gambia                           | Mederova 203    | Technical Support Engineer                  |   6812909\
+    3142 | Abigail    | VYRrlncSa       | richard@outlook.com   | +996554693809 | Japan                            | Pravda 282      | Senior Support Specialist                   |    299352\
+    1181 | Abigail    | Cx6ye5SeXH1lQJ  | daniel@mail.ru        | +996773353587 | Mali                             | Jibek-Jolu 67   | Telecommunications Specialist               |   9343628\
+    4901 | Abigail    | qwerty          | elizabeth@bk.ru       | 000000000000  | Grenada                          | Moskovskaya 150 | Network Architect                           |   9510489\
+    8421 | Abigail    | qwerty          | noah@gmail.com        | +996773617038 | Switzerland                      | Razakova 315    | Applications Engineer                       |   4798506\
+    7407 | Abigail    | qwerty          | george@outlook.com    | +996501875778 | Norway                           | Moskovskaya 351 | Help Desk Specialist                        |   1899487\
+    8324 | Abigail    | LEy2S2OrJ9a2Miw | george@outlook.com    | +996992816696 | Israel                           | Manasa 201      | Technical Support Engineer                  |    688579\
+    4711 | Abigail    | qwerty          | daniel@mail.ru        | +996994223928 | Panama                           | Moskovskaya 412 | Cloud Architect                             |   8890990\
+    9218 | Abigail    | uNrwHqugDu      | alexander@outlook.com | +996992826599 | Tanzania                         | Mederova 24     | Cloud Services Developer                    |    157397\
+    3311 | Abigail    | 3l1nxh2uwwSgOS  | charlie@gmail.com     | +996779456616 | Guinea-Bissau                    | Erkindik 104    | Network Engineer                            |   9392880\
+    4543 | Abigail    | oC5w1ekqHMnlBC0 | liazat@gmail.com      | 000000000000  | North Macedonia                  | Chui 429        | Senior Applications Engineer                |   8196452\
+    4149 | Abigail    | qwerty          | ethan@gmail.com       | +996773715486 | Guatemala                        | Razakova 12     | Computer and Information Research Scientist |   1462087\
+    8599 | Abigail    | U3owhDKZuUq0xw  | rhys@mail.ru          | +996704254479 | Latvia                           | Jibek-Jolu 276  | Network Administrator                       |   9062196\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+    2091 | Abigail    | I391VJV5        | qwerty@outlook.com    | +996999210625 | Sao Tome and Principe            | Toktogula 364   | Junior Software Engineer                    |   1146463\
+    2730 | Abigail    | Tk5uJJRYQcD38s  | mia@mail.ru           | +996776640156 | Austria                          | Chui 372        | Software Developer                          |   5061414\
+    4593 | Abigail    | rlFekKRbXR      | oliver@outlook.com    | +996707192049 | Gambia                           | Mederova 203    | Technical Support Engineer                  |   6812909\
+    3142 | Abigail    | VYRrlncSa       | richard@outlook.com   | +996554693809 | Japan                            | Pravda 282      | Senior Support Specialist                   |    299352\
+    1181 | Abigail    | Cx6ye5SeXH1lQJ  | daniel@mail.ru        | +996773353587 | Mali                             | Jibek-Jolu 67   | Telecommunications Specialist               |   9343628\
+    4901 | Abigail    | qwerty          | elizabeth@bk.ru       | 000000000000  | Grenada                          | Moskovskaya 150 | Network Architect                           |   9510489\
+    8421 | Abigail    | qwerty          | noah@gmail.com        | +996773617038 | Switzerland                      | Razakova 315    | Applications Engineer                       |   4798506\
+    7407 | Abigail    | qwerty          | george@outlook.com    | +996501875778 | Norway                           | Moskovskaya 351 | Help Desk Specialist                        |   1899487\
+    8324 | Abigail    | LEy2S2OrJ9a2Miw | george@outlook.com    | +996992816696 | Israel                           | Manasa 201      | Technical Support Engineer                  |    688579\
+    4711 | Abigail    | qwerty          | daniel@mail.ru        | +996994223928 | Panama                           | Moskovskaya 412 | Cloud Architect                             |   8890990\
+    9218 | Abigail    | uNrwHqugDu      | alexander@outlook.com | +996992826599 | Tanzania                         | Mederova 24     | Cloud Services Developer                    |    157397\
+    3311 | Abigail    | 3l1nxh2uwwSgOS  | charlie@gmail.com     | +996779456616 | Guinea-Bissau                    | Erkindik 104    | Network Engineer                            |   9392880\
+    4543 | Abigail    | oC5w1ekqHMnlBC0 | liazat@gmail.com      | 000000000000  | North Macedonia                  | Chui 429        | Senior Applications Engineer                |   8196452\
+    4149 | Abigail    | qwerty          | ethan@gmail.com       | +996773715486 | Guatemala                        | Razakova 12     | Computer and Information Research Scientist |   1462087\
+    8599 | Abigail    | U3owhDKZuUq0xw  | rhys@mail.ru          | +996704254479 | Latvia                           | Jibek-Jolu 276  | Network Administrator                       |   9062196\
+instagram=# SELECT * FROM users ORDER BY country;\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+    8204 | Reece      | vKhA9yCmDP      | jessica@bk.ru         | +996708897242 | Albania                          | Chui 364        | Computer Systems Manager                    |   4117512\
+    6834 | Sophie     | nhMIibwK8wOXY   | emma@gmail.com        | +996703508574 | Albania                          | Pravda 232      | Desktop Support Manager                     |   5670161\
+    2542 | Jessica    | GF6LHWHuy       | joanne@mail.ru        | +996778272231 | Albania                          | Ahunbaeva 135   | Senior System Analyst                       |   5970234\
+    9014 | Joseph     | iO0tQEMjdrTg    | megan@outlook.com     | +996990582427 | Albania                          | Erkindik 374    | Information Security                        |   2472151\
+    7390 | user_user  | LqSx2xbxPk1ogo  | charlie@mail.ru       | +996553483523 | Albania                          | Jibek-Jolu 135  | Customer Support Administrator              |   6962753\
+    1507 | Patricia   | Hfa7hlzcs       | emma@gmail.com        | +996504872175 | Albania                          | Toktogula 451   | Systems Designer                            |   2036212\
+    9981 | Jacob      | 3WJMyJuc3       | george@outlook.com    | +996708179870 | Albania                          | Mederova 259    | Software Engineer                           |   2377058\
+    7036 | Olivia     | 0XvZycRwQC      | joomart@outlook.com   | 000000000000  | Albania                          | Kievskaya 1     | Computer Systems Manager                    |   6043988\
+    2330 | user123    | a5HPE8AE89TD    | margaret@bk.ru        | +996552770701 | Albania                          | Jibek-Jolu 143  | System Architect                            |   1705949\
+    8232 | Joomart    | zkNfVraAggnQiWc | michael@gmail.com     | +996502389657 | Albania                          | Mederova 128    | Senior Network Engineer                     |   9500128\
+    8796 | Joanne     | gWQOeNcmUff     | samantha@outlook.com  | +996996370601 | Albania                          | Jibek-Jolu 191  | Senior Software Engineer                    |   5000031\
+    7911 | Susan      | eDcX9qdsDp      | ava@gmail.com         | 000000000000  | Albania                          | Erkindik 111    | Network Architect                           |   6705490\
+    6645 | Charlie    | 6bWsApHk8q      | mia@mail.ru           | +996996483863 | Albania                          | Sovetskaya 312  | Desktop Support Manager                     |   6400189\
+    5906 | Mia        | bQKDLsqqbWuf    | connor@bk.ru          | +996996502127 | Albania                          | Jibek-Jolu 437  | Technical Support Engineer                  |   2234442\
+    9665 | Harry      | A2AVzAzH        | william@bk.ru         | +996704463272 | Albania                          | Manasa 233      | IT Support Manager                          |    709960\
+instagram=# SELECT * FROM users ORDER BY email;\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+    3960 | James      | rlFekKRbXR      |                       | +996777981285 | Rwanda                           | False           | Applications Engineer                       |   1007691\
+    6996 | John       | m0WSehiU        |                       | +996554437424 | Niger                            | False           | Computer and Information Systems Manager    |   7566542\
+    4092 | Rhys       | A0L0udpZd       |                       | +996705726940 | Zimbabwe                         | False           | Data Quality Manager                        |   6942759\
+    4488 | Jacob      | rpbM1FOjLd0D5   |                       | +996994748054 | Benin                            | False           | Technical Support Engineer                  |   8483509\
+    4620 | James      | dHCF1sxYZ8pbO   |                       | +996552161083 | Libya                            | False           | Senior System Designer                      |   8773231\
+    6864 | Isabella   | EyGUppfzC2VKe   |                       | +996774977486 | San Marino                       | False           | Senior Web Administrator                    |   7078168\
+    4752 | test_user  | 6r8pGlAKi2      |                       | +996774677127 | Paraguay                         | False           | Desktop Support Specialist                  |   6991611\
+    9900 | Harry      | CgiMQhXB        |                       | +996993392923 | Kiribati                         | False           | Senior Applications Engineer                |   1075046\
+    9768 | Aibek      | 7E8pYBXT0skx    |                       | +996778770805 | Bahrain                          | False           | Senior Network System Administrator         |   2490505\
+    6732 | Charlie    | qqplorCrDBaQVn  |                       | +996555463355 | Benin                            | False           | Programmer                                  |   4561915\
+     924 | Bethany    | 8QYjPkCsBxVND8  |                       | +996505899826 | Namibia                          | False           | Database Administrator                      |   8079500\
+    4884 | Liazat     | IOLETq6SXu      |                       | +996997187886 | Saint Kitts and Nevis            | False           | Senior System Architect                     |   2451058\
+    5016 | qwerty     | DjXNQp63URU     |                       | +996997385669 | Norway                           | False           | Systems Designer                            |   8299478\
+    6600 | Abigail    | 6UjQYUfWGgGfv   |                       | +996700529830 | Morocco                          | False           | Application Developer                       |   4222165\
+    6468 | Isabella   | a6NGvVS3CnCvKaV |                       | +996506594314 | Tanzania                         | False           | Junior Software Engineer                    |   6431392\
+instagram=# SELECT user_id, login FROM users;\
+ user_id |   login    \
+---------+------------\
+       1 | Jack\
+       2 | Michael\
+       3 | Joomart\
+       4 | Isabella\
+       5 | Elizabeth\
+       6 | Samantha\
+       7 | Jack\
+       8 | Richard\
+       9 | Liam\
+      10 | Amelia\
+      12 | user123\
+      13 | Liazat\
+      14 | Adinai\
+      15 | Jacob\
+      16 | Emily\
+      17 | Charles\
+      18 | Sophia\
+      19 | Rhys\
+      20 | Thomas\
+      21 | bzzzz\
+      22 | George\
+      23 | Emily\
+      24 | test_user\
+      25 | Charles\
+      27 | William\
+      28 | Aibek\
+      30 | Sultan\
+      31 | Joseph\
+      32 | Charlie\
+      33 | Sultan\
+      34 | Patricia\
+      36 | Jennifer\
+instagram=# SELECT * FROM users WHERE login LIKE '%as%' OR '%cg%' OR '%am%' OR '%qwe%' OR '%er%' OR '%ka%' OR '%an%';\
+ERROR:  invalid input syntax for type boolean: "%cg%"\
+LINE 1: SELECT * FROM users WHERE login LIKE '%as%' OR '%cg%' OR '%a...\
+                                                       ^\
+instagram=# SELECT * FROM users WHERE login LIKE '%as%' OR login LIKE '%cg%' OR login LIKE '%am%' OR login LIKE '%qwe%' OR login LIKE '%er%' OR login LIKE '%ka%' OR login LIKE '%an%';\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      20 | Thomas     | w3buq6IaD8      | konstantin@bk.ru      | +996775133760 | Saint Kitts and Nevis            | Chui 6          | Senior Support Specialist                   |   8215947\
+      24 | test_user  | pTfAdprxq       | james@mail.ru         | +996996822900 | Saudi Arabia                     | Sovetskaya 389  | Software Architect                          |   3029821\
+      27 | William    | sSAKsf3iNpd     | charlotte@mail.ru     | +996555377388 | Maldives                         | Toktogula 312   | .NET Developer                              |   9765632\
+      30 | Sultan     | Px6WyQbymZH658  | victoria@outlook.com  | +996709588659 | Bhutan                           | Toktogula 428   | Support Specialist                          |   2973540\
+      33 | Sultan     | kpcv6nUejTaFSM  | david@outlook.com     | +996706614891 | Guatemala                        | Erkindik 154    | Senior Web Developer                        |   2164844\
+      36 | Jennifer   | 3l1nxh2uwwSgOS  | jake@mail.ru          | +996554441570 | Guinea-Bissau                    | Toktogula 249   | Technical Support Specialist                |   7499698\
+      38 | Oliver     | kmFemvIQ6p      | james@mail.ru         | +996552468147 | Marshall Islands                 | Chui 43         | System Architect                            |   5813207\
+      40 | Ethan      | 2Fy8cAIkFm      | jennifer@bk.ru        | +996550425333 | Saint Lucia                      | Toktogula 6     | Front End Developer                         |   9517297\
+      42 | Damian     | pzuK33fMT       | charlie@gmail.com     | +996997163263 | Chad                             | Pravda 482      | .NET Developer                              |   9246312\
+      49 | Ethan      | ZNjr5KfKnJilp   | linda@mail.ru         | +996501822574 | Poland                           | Pravda 180      | Software Engineer                           |   2451058\
+      50 | Damian     | fSG3t6LEeI      | abigail@outlook.com   | +996552723046 | Ghana                            | Ahunbaeva 267   | Junior Software Engineer                    |   9857515\
+      53 | test_user  | uyGeM2q0        | michelle@mail.ru      | +996500280170 | Mexico                           | Sovetskaya 402  | Senior Network Architect                    |    703351\
+instagram=# SELECT * FROM users WHERE login LIKE '%lol' OR login LIKE '%kan' OR login LIKE '%ck' OR login LIKE '%ie' OR login LIKE '%ig';\
+ user_id |  login  |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+---------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack    | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       7 | Jack    | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+      32 | Charlie | muI8X99UIHAd    | lily@mail.ru          | +996779761699 | Syria                            | Jibek-Jolu 499  | Senior Web Administrator                    |   1906987\
+      54 | Charlie | mfzM2wgLCj6     | elizabeth@bk.ru       | +996555126153 | Finland                          | Erkindik 127    | IT Analyst                                  |   8572296\
+     241 | Sophie  | xYe5WZyq        | margaret@bk.ru        | +996998230433 | Saudi Arabia                     | Kievskaya 216   | Senior Programmer Analyst                   |   3653791\
+     242 | Jack    | lkuhcpW9        | james@outlook.com     | +996998900599 | Gabon                            | Kievskaya 146   | Chief Technology Officer (CTO)              |   5406968\
+     330 | Charlie | XIBFxsJ3zhPV    | jessica@bk.ru         | +996558904269 | Dominica                         | Chui 160        | Help Desk Specialist                        |   6762341\
+     340 | Sophie  | 0ZaMpYYsaG8     | liam@gmail.com        | +996998635554 | Austria                          | Ahunbaeva 128   | Cloud System Administrator                  |    759694\
+     368 | Jack    | pUHWux5G        | elizabeth@bk.ru       | +996500484647 | Ireland                          | Chui 167        | Computer Programmer                         |   7042458\
+     399 | Charlie | iVNszw30LnkXJuT | callum@outlook.com    | +996509330556 | Qatar                            | Sovetskaya 136  | Software Architect                          |   6421056\
+     444 | Jack    | UYs15y6i1oQ37m  | ava@bk.ru             | +996999987202 | Colombia                         | Jibek-Jolu 159  | Management Information Systems Director     |   2699743\
+     451 | Sophie  | 7YX366Gc9g5S    | emma@gmail.com        | +996707804402 | New Zealand                      | Mederova 21     | Information Security                        |   1390593\
+     532 | Charlie | ttK91eOZ2fNgjR  | lily@mail.ru          | +996502379589 | Iraq                             | Sovetskaya 89   | Java Developer                              |   3800005\
+     537 | Charlie | lZO6wV9c        | jack@bk.ru            | +996708139619 | Andorra                          | Mederova 180    | Customer Support Specialist                 |   1740203\
+     551 | Jack    | cCk1Hs2Az3      | konstantin@bk.ru      | +996556525015 | Thailand                         | Jibek-Jolu 314  | Technical Operations Officer                |   5203124\
+instagram=# SELECT * FROM users WHERE login LIKE 'a%' OR login LIKE 'b%' OR login LIKE 'c%' OR login LIKE 'd%' OR login LIKE 'M%' OR login LIKE 'D%' OR login LIKE 'A%';\
+ user_id |   login   |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+-----------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       2 | Michael   | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+      10 | Amelia    | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      14 | Adinai    | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      21 | bzzzz     | VJUGRu9cNcBL    | margaret@gmail.com    | +996506597627 | Papua New Guinea                 | Chui 448        | Senior System Architect                     |   8174929\
+      28 | Aibek     | EhE8rKFEse      | daniel@mail.ru        | +996994163379 | Sri Lanka                        | Ahunbaeva 489   | Webmaster                                   |   4883483\
+      42 | Damian    | pzuK33fMT       | charlie@gmail.com     | +996997163263 | Chad                             | Pravda 482      | .NET Developer                              |   9246312\
+      50 | Damian    | fSG3t6LEeI      | abigail@outlook.com   | +996552723046 | Ghana                            | Ahunbaeva 267   | Junior Software Engineer                    |   9857515\
+      63 | Mason     | JUMjsMQB        | user123@bk.ru         | +996700728952 | Belgium                          | Sovetskaya 377  | Technical Operations Officer                |    412860\
+      65 | Aibek     | izSDFOdz        | connor@bk.ru          | +996550580874 | Nicaragua                        | Pravda 384      | IT Manager                                  |    493642\
+      70 | Alymbek   | Y9ZLnZjqllqfr   | liam@gmail.com        | +996506597627 | Comoros                          | Jibek-Jolu 285  | Network Systems Administrator               |    584672\
+      71 | Megan     | cWtkX80j        | patricia@outlook.com  | +996998625758 | Nicaragua                        | Jibek-Jolu 170  | Systems Software Engineer                   |   3274421\
+      78 | Aslan     | j70Zcq5RUnzV    | amelia@gmail.com      | +996773508053 | Morocco                          | Jibek-Jolu 334  | Senior Web Developer                        |   9104870\
+      81 | Daniyar   | WyuuHQSHTNmA    | bethany@mail.ru       | +996772132185 | North Macedonia                  | Erkindik 407    | System Architect                            |   4633906\
+      84 | Daniel    | RbicXXsdThlPy   | bethany@mail.ru       | +996704721312 | Peru                             | Toktogula 109   | Customer Support Specialist                 |   9370788\
+      86 | bzzzz     | hKOMpjFV        | charlie@gmail.com     | +996700147179 | North Macedonia                  | Jibek-Jolu 5    | IT Director                                 |   5955359\
+instagram=# SELECT MAX(followers), login FROM users GROUP BY login WHERE profession = (SELECT FROM profession WHERE profession LIKE 'Senior %' AND country = 'Israel');\
+ERROR:  syntax error at or near "WHERE"\
+LINE 1: ...T MAX(followers), login FROM users GROUP BY login WHERE prof...\
+                                                             ^\
+instagram=# SELECT MAX(followers), login, profession, country FROM users WHERE profession = (SELECT FROM profession WHERE profession LIKE 'Senior %' AND country = 'Israel');\
+ERROR:  relation "profession" does not exist\
+LINE 1: ...ountry FROM users WHERE profession = (SELECT FROM profession...\
+                                                             ^\
+instagram=# SELECT * FROM users GROUP BY login WHERE profession = (SELECT FROM profession WHERE profession LIKE 'Senior %' AND country = 'Israel' AND followers > 90000);\
+ERROR:  syntax error at or near "WHERE"\
+LINE 1: SELECT * FROM users GROUP BY login WHERE profession = (SELEC...\
+                                           ^\
+instagram=# SELECT * FROM users WHERE profession = (SELECT FROM profession WHERE profession LIKE 'Senior %' AND country = 'Israel' AND followers > 90000) GROUP BY login;\
+ERROR:  relation "profession" does not exist\
+LINE 1: ...LECT * FROM users WHERE profession = (SELECT FROM profession...\
+                                                             ^\
+instagram=# SELECT * FROM users WHERE profession = (SELECT FROM profession WHERE profession LIKE 'Senior %' AND country = 'Israel' AND followers > 90000);\
+ERROR:  relation "profession" does not exist\
+LINE 1: ...LECT * FROM users WHERE profession = (SELECT FROM profession...\
+                                                             ^\
+instagram=# SELECT * FROM users WHERE profession LIKE 'Senior P%' AND country = 'Israel' and followers = MAX(followers) GROUP BY login;\
+ERROR:  aggregate functions are not allowed in WHERE\
+LINE 1: ...Senior P%' AND country = 'Israel' and followers = MAX(follow...\
+                                                             ^\
+instagram=# SELECT * FROM users WHERE profession LIKE 'Senior P%' AND country = 'Israel' and followers > 90000 GROUP BY login;\
+ERROR:  column "users.user_id" must appear in the GROUP BY clause or be used in an aggregate function\
+LINE 1: SELECT * FROM users WHERE profession LIKE 'Senior P%' AND co...\
+               ^\
+instagram=# SELECT * FROM users WHERE profession LIKE 'Senior P%' AND country = 'Israel' and followers > 90000 GROUP BY users.login;\
+ERROR:  column "users.user_id" must appear in the GROUP BY clause or be used in an aggregate function\
+LINE 1: SELECT * FROM users WHERE profession LIKE 'Senior P%' AND co...\
+               ^\
+instagram=# SELECT * FROM users WHERE profession LIKE 'Senior P%' AND country = 'Israel' and followers > 90000 GROUP BY users.user_id;\
+ user_id | login | password | email | phone_number | country | address | profession | followers \
+---------+-------+----------+-------+--------------+---------+---------+------------+-----------\
+(0 rows)\
+\
+instagram=# SELECT * FROM users WHERE profession LIKE 'Senior P%' AND country = 'Israel' and followers > 90000;\
+ user_id | login | password | email | phone_number | country | address | profession | followers \
+---------+-------+----------+-------+--------------+---------+---------+------------+-----------\
+(0 rows)\
+\
+instagram=# SELECT * FROM users WHERE profession LIKE 'Senior P%' OR country = 'Israel' OR followers > 90000;\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+instagram=# SELECT MAX(followers) FROM users WHERE profession LIKE 'Senior P%' AND country = 'Israel';\
+ max \
+-----\
+    \
+(1 row)\
+\
+instagram=# SELECT MAX(followers) FROM users WHERE profession LIKE 'Senior P%' AND country = 'Israel' GROUP BY login;\
+ max \
+-----\
+(0 rows)\
+\
+instagram=# SELECT MAX(followers), login, country, profession FROM users WHERE profession = 'Senior Programmer' AND country = 'Israel' GROUP BY login;\
+ERROR:  column "users.country" must appear in the GROUP BY clause or be used in an aggregate function\
+LINE 1: SELECT MAX(followers), login, country, profession FROM users...\
+                                      ^\
+instagram=# SELECT MAX(followers), login FROM users WHERE profession = 'Senior Programmer' AND country = 'Israel' GROUP BY login;\
+ max | login \
+-----+-------\
+(0 rows)\
+\
+instagram=# SELECT * FROM users;\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist                  |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                    |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                           |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                           |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                                 |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                      |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                              |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                        |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                       |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                                 |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator               |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                      |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                           |   5991855\
+      16 | Emily      | aIc37weM        | ermek@outlook.com     | +996504680369 | Estonia                          | Jibek-Jolu 314  | Senior System Administrator                 |   6638530\
+:\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession               \
+   | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+------------------------------------------\
+---+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                    \
+   |   6298073\
+       2 | Michael    | WYzhPg29OOn     | alymbek@gmail.com     | +996999617146 | Cuba                             | Manasa 436      | Desktop Support Specialist               \
+   |   1070299\
+       3 | Joomart    | HrqhIBgN        | jessica@bk.ru         | +996996458841 | Jordan                           | Pravda 246      | Senior Software Engineer                 \
+   |   1917631\
+       4 | Isabella   | WuDoCp9KsVa     | joomart@outlook.com   | +996551126098 | Norway                           | Jibek-Jolu 3    | Network Architect                        \
+   |   8639024\
+       5 | Elizabeth  | vJYCxqfNLEGZk   | jennifer@bk.ru        | +996773281163 | Senegal                          | Sovetskaya 232  | Senior Programmer                        \
+   |     88672\
+       6 | Samantha   | eRr5JJZa0jr     | michael@bk.ru         | +996550297811 | South Sudan                      | Erkindik 263    | IT Director                              \
+   |   3880940\
+       7 | Jack       | xxsAwKAZGp      | thomas@gmail.com      | +996776197802 | Greece                           | Chui 367        | Database Administrator                   \
+   |   9921602\
+       8 | Richard    | fYxPfKiHzPGBoP  | joseph@bk.ru          | +996551716587 | Haiti                            | Toktogula 311   | Java Developer                           \
+   |   5208968\
+       9 | Liam       | 3EjpJsYz3Zq     | salavat@gmail.com     | +996999944138 | Cameroon                         | Manasa 256      | Technical Specialist                     \
+   |   4360845\
+      10 | Amelia     | 3Se8897K1sCv    | elizabeth@bk.ru       | +996509610560 | Guinea-Bissau                    | Erkindik 273    | Application Developer                    \
+   |   4571046\
+      12 | user123    | Q9k010HX5       | ava@gmail.com         | +996999431375 | Montenegro                       | Kievskaya 170   | IT Director                              \
+   |    353319\
+      13 | Liazat     | ByrJ6iE8HmMw6xS | test_test@bk.ru       | +996559897898 | Haiti                            | Pravda 305      | Senior Database Administrator            \
+   |   6508618\
+      14 | Adinai     | eqhWwTIlpA      | jacob@outlook.com     | +996993590181 | Venezuela                        | Ahunbaeva 470   | Senior System Designer                   \
+   |   3116554\
+      15 | Jacob      | ffZnsOP5VQ      | william@outlook.com   | +996509305106 | Comoros                          | Chui 217        | Network Architect                        \
+ user_id |   login    |    password     |         email         | phone_number  |             country              |     address     |                 profession                  | followers \
+---------+------------+-----------------+-----------------------+---------------+----------------------------------+-----------------+---------------------------------------------+-----------\
+       1 | Jack       | aSDLAJ9AsLhE    | harry@bk.ru           | +996774319974 | Ghana                            | Manasa 144      | Senior System Analyst                       |   6298073\
+instagram=# select * from users where country = 'Israel' and profession = 'Senior programmer'\
+instagram-# ;\
+ user_id | login | password | email | phone_number | country | address | profession | followers \
+---------+-------+----------+-------+--------------+---------+---------+------------+-----------\
+(0 rows)\
+\
+instagram=# select * from users where country = 'Israel' and profession like 'Senior %'\
+;\
+ user_id |  login   |    password     |         email         | phone_number  | country |     address     |          profession          | followers \
+---------+----------+-----------------+-----------------------+---------------+---------+-----------------+------------------------------+-----------\
+     927 | Jacob    | 9XbtQ6CG3W6     | sultan@mail.ru        | +996775410655 | Israel  | Kievskaya 233   | Senior Applications Engineer |   5476675\
+    2825 | James    | jTZLJdPrTplV    | michael@gmail.com     | +996554400313 | Israel  | Toktogula 399   | Senior System Administrator  |    574375\
+    2901 | William  | qYWqKhsn8pEqp7A | aibek@outlook.com     | +996502424341 | Israel  | Manasa 283      | Senior Security Specialist   |   7198630\
+    3150 | Atai     | BZCn6tKORK      | joanne@mail.ru        | +996555763290 | Israel  | Ahunbaeva 379   | Senior Network Engineer      |   3447315\
+    4433 | Thomas   | 20T5dU6Ld6MMt   | sarah@bk.ru           | +996503883499 | Israel  | Mederova 428    | Senior Network Engineer      |   1587798\
+    4434 | Jacob    | 5ieiEs8emZp6C   | elizabeth@bk.ru       | +996504521500 | Israel  | Ahunbaeva 216   | Senior Web Administrator     |   7312256\
+    5135 | Michelle | 0KNArkdN7Mk     | poppy@mail.ru         | +996997892595 | Israel  | Chui 499        | Senior System Architect      |    272668\
+    8543 | Bethany  | yojsGQoc        | elizabeth@bk.ru       | +996559387421 | Israel  | Sovetskaya 316  | Senior Software Engineer     |   8194561\
+    3047 | Jessica  | qwerty          | alexander@outlook.com | +996509489205 | Israel  | Moskovskaya 325 | Senior Software Engineer     |   6328352\
+    6166 | Abigail  | qwerty          | lauren@mail.ru        | +996778408832 | Israel  | Razakova 499    | Senior System Designer       |   2497518\
+    6957 | Charlie  | qwerty          | jacob@mail.ru         | +996552909391 | Israel  | Moskovskaya 7   | Senior Web Administrator     |   6167551\
+    7546 | Daniyar  | qwerty          | megan@outlook.com     | +996999677799 | Israel  | Razakova 122    | Senior Network Architect     |   7213906\
+    8169 | Tracy    | qwerty          | jacob@mail.ru         | +996997200760 | Israel  | Razakova 468    | Senior System Architect      |   4826071\
+(13 rows)\
+\
+instagram=# SELECT * FROM users WHERE email = NULL;\
+ user_id | login | password | email | phone_number | country | address | profession | followers \
+---------+-------+----------+-------+--------------+---------+---------+------------+-----------\
+(0 rows)\
+\
+instagram=# SELECT * FROM users WHERE email = '';\
+ user_id |   login    |    password     | email | phone_number  |             country              | address |                profession                | followers \
+---------+------------+-----------------+-------+---------------+----------------------------------+---------+------------------------------------------+-----------\
+    2772 | Amelia     | qNzdhxHzTOy7e   |       | +996997555732 | Burkina Faso                     | False   | Cloud System Administrator               |   1747326\
+    4224 | Salavat    | CL6hkMY6ddTw    |       | +996550968387 | Tunisia                          | False   | IT Coordinator                           |    824058\
+    4356 | Abigail    | x1mF2EdY        |       | +996770531224 | Netherlands                      | False   | Data Quality Manager                     |   7357930\
+    5148 | Charlie    | gaPEoUnP        |       | +996997585650 | Lesotho                          | False   | Network Systems Administrator            |   9512457\
+    7656 | Ava        | tSLJTJrShHbEf   |       | +996502155192 | Iran                             | False   | Developer                                |   9433808\
+     132 | Olivia     | tXGy8tB06omhQ   |       | +996552471738 | Nepal                            | False   | Software Developer                       |   9067760\
+     264 | Konstantin | wFhGZ5sVmq37gIX |       | +996774463420 | Libya                            | False   | Desktop Support Manager                  |   4948510\
+     396 | test_test  | ss9ZBwyTNxgqGW  |       | +996559229009 | Russia                           | False   | Systems Analyst                          |   7043869\
+     528 | user_user  | aXKD2IqvLj      |       | +996990931701 | Saint Vincent and the Grenadines | False   | Customer Support Specialist              |   2108914\
+     660 | Liazat     | WZQcAlvmM       |       | +996773503570 | Iceland                          | False   | Senior Systems Software Engineer         |   6048066\
+     792 | Ava        | OPu7iwR9t       |       | +996507965960 | Somalia                          | False   | Application Support Analyst              |   2272361\
+     924 | Bethany    | 8QYjPkCsBxVND8  |       | +996505899826 | Namibia                          | False   | Database Administrator                   |   8079500\
+    1188 | Callum     | DVmeyj2GMGlHk   |       | +996504854740 | San Marino                       | False   | Cloud Consultant                         |    420476\
+    1452 | Mason      | sDMphpQA        |       | +996503778299 | Sierra Leone                     | False   | Senior System Administrator              |   7188727\
+    1584 | Salavat    | tIkaRNWOh       |       | +996501498236 | Singapore                        | False   | Front End Developer                      |   6431392\
+    1716 | Charlie    | KrYYSwQ3sP      |       | +996997133282 | North Macedonia                  | False   | Chief Information Officer (CIO)          |   2974747\
+    1980 | Sophie     | NfxgwTDmrk      |       | +996501534951 | South Sudan                      | False   | Technical Specialist                     |   1288626\
+    2112 | Isabella   | fZ2At7Wuh       |       | +996994124476 | Kiribati                         | False   | IT Director                              |   8197916\
+    2244 | Ava        | GltwUGY9PTTeCd  |       | +996559167410 | Luxembourg                       | False   | Desktop Support Specialist               |   7642881\
+    2376 | Linda      | Qp28jvFvKQV     |       | +996506642490 | Saudi Arabia                     | False   | Information Security                     |   7386626\
+    2508 | Madison    | JN5vOWSmLls     |       | +996556881435 | Haiti                            | False   | Senior Programmer                        |   9006504\
+    2640 | Sophia     | tHfaqpsVzo      |       | +996506825569 | Philippines                      | False   | Java Developer                           |   4526800\
+    2904 | Joomart    | Yz66HH5e        |       | +996993198892 | Mexico                           | False   | Software Quality Assurance Analyst       |   5971802\
+    3036 | Michael    | cKxIy10EprD     |       | +996556892145 | Eswatini (fmr. "Swaziland")      | False   | Senior Software Engineer                 |     66748\
+    3168 | user123    | XHF6aTfcRThbS   |       | +996992847640 | Democratic Republic of the Congo | False   | IT Coordinator                           |   3077742\
+    3300 | Ava        | xGvOTSogCZ      |       | +996559229009 | Indonesia                        | False   | Applications Engineer                    |   4950380\
+    3432 | Sophia     | j70Zcq5RUnzV    |       | +996708187635 | Madagascar                       | False   | Management Information Systems Director  |   3837278\
+    3564 | user_user  | UZeaQJ82Pneh1Dd |       | +996701708399 | North Korea                      | False   | Web Administrator                        |   8917305\
+    3696 | test_user  | dngqywJoblhT    |       | +996994818828 | Rwanda                           | False   | Cloud Architect                          |   5549445\
+    3828 | Margaret   | k9B29ho7yXZMf   |       | +996704862637 | Cabo Verde                       | False   | Application Support Analyst              |   7407900\
+    3960 | James      | rlFekKRbXR      |       | +996777981285 | Rwanda                           | False   | Applications Engineer                    |   1007691\
+    4092 | Rhys       | A0L0udpZd       |       | +996705726940 | Zimbabwe                         | False   | Data Quality Manager                     |   6942759\
+instagram=# SELECT * FROM users WHERE email = '' AND country = 'Chuy';\
+ user_id | login | password | email | phone_number | country | address | profession | followers \
+---------+-------+----------+-------+--------------+---------+---------+------------+-----------\
+(0 rows)\
+\
+instagram=# SELECT login, phone_number FROM users WHERE profession LIKE 'Web De%';\
+   login   | phone_number  \
+-----------+---------------\
+ Charles   | +996551290196\
+ Atai      | +996992539318\
+ Ethan     | +996775336893\
+ Charlie   | +996775967574\
+ user_user | +996509571109\
+ Kyle      | +996996589838\
+ Elizabeth | +996779470386\
+ Alymbek   | +996558365349\
+ Jacob     | +996997493525\
+ test_test | +996705182742\
+ Rhys      | +996701522405\
+ Thomas    | +996704692479\
+ Lily      | +996770660714\
+ Samantha  | +996709718058\
+ Thomas    | +996777405592\
+ Connor    | +996558225605\
+ Joanne    | +996771361780\
+ Kyle      | +996702940749\
+ Thomas    | +996779288694\
+ Joanne    | +996771364026\
+ qwerty    | +996705508543\
+ Barbara   | +996779768700\
+ Jacob     | +996770579895\
+ Mason     | +996997987924\
+ Oliver    | +996774300137\
+ Liazat    | +996556617311\
+ Elizabeth | +996703314430\
+ Connor    | +996773573620\
+ Samantha  | +996557696067\
+ Jessica   | +996996640047\
+ Lauren    | +996997140337\
+ Megan     | +996509618455\
+instagram=# SELECT login, phone_number, profession FROM users WHERE profession LIKE 'Web De%';\
+   login   | phone_number  |  profession   \
+-----------+---------------+---------------\
+ Charles   | +996551290196 | Web Developer\
+ Atai      | +996992539318 | Web Developer\
+ Ethan     | +996775336893 | Web Developer\
+ Charlie   | +996775967574 | Web Developer\
+ user_user | +996509571109 | Web Developer\
+ Kyle      | +996996589838 | Web Developer\
+ Elizabeth | +996779470386 | Web Developer\
+ Alymbek   | +996558365349 | Web Developer\
+ Jacob     | +996997493525 | Web Developer\
+ test_test | +996705182742 | Web Developer\
+ Rhys      | +996701522405 | Web Developer\
+ Thomas    | +996704692479 | Web Developer\
+ Lily      | +996770660714 | Web Developer\
+ Samantha  | +996709718058 | Web Developer\
+ Thomas    | +996777405592 | Web Developer\
+ Connor    | +996558225605 | Web Developer\
+ Joanne    | +996771361780 | Web Developer\
+ Kyle      | +996702940749 | Web Developer\
+ Thomas    | +996779288694 | Web Developer\
+ Joanne    | +996771364026 | Web Developer\
+ qwerty    | +996705508543 | Web Developer\
+ Barbara   | +996779768700 | Web Developer\
+ Jacob     | +996770579895 | Web Developer\
+ Mason     | +996997987924 | Web Developer\
+ Oliver    | +996774300137 | Web Developer\
+ Liazat    | +996556617311 | Web Developer\
+ Elizabeth | +996703314430 | Web Developer\
+ Connor    | +996773573620 | Web Developer\
+ Samantha  | +996557696067 | Web Developer\
+ Jessica   | +996996640047 | Web Developer\
+ Lauren    | +996997140337 | Web Developer\
+ Megan     | +996509618455 | Web Developer\
+instagram=# SELECT login FROM users WHERE email = 'False' AND UPDATE users SET email = 'user@gmail.com';\
+ERROR:  syntax error at or near "users"\
+LINE 1: ...login FROM users WHERE email = 'False' AND UPDATE users SET ...\
+                                                             ^\
+instagram=# SELECT login FROM users WHERE email = 'False' AND UPDATE email SET email = 'user@gmail.com';\
+ERROR:  syntax error at or near "email"\
+LINE 1: ...login FROM users WHERE email = 'False' AND UPDATE email SET ...\
+                                                             ^\
+instagram=# UPDATE users SET email = 'user@gmail.com' WHERE email = 'False';\
+UPDATE 0\
+instagram=# SELECT login, country FROM users WHERE profession = 'Unemployed';\
+   login    | country \
+------------+---------\
+ user123    | Guyana\
+ user123    | Croatia\
+ James      | Guyana\
+ Ermek      | Guyana\
+ Sarah      | Croatia\
+ bzzzz      | Croatia\
+ test_user  | Guyana\
+ Charles    | Guyana\
+ Sarah      | Croatia\
+ Konstantin | Croatia\
+ Jessica    | Croatia\
+ Tracy      | Guyana\
+ James      | Croatia\
+ Olivia     | Croatia\
+ Atai       | Croatia\
+ Olivia     | Guyana\
+ Michael    | Croatia\
+ Michael    | Guyana\
+ Ava        | Guyana\
+ Lily       | Guyana\
+ Madison    | Guyana\
+ Joanne     | Guyana\
+ Sarah      | Croatia\
+ William    | Croatia\
+ Ava        | Guyana\
+ Joseph     | Guyana\
+ Isabella   | Guyana\
+ Ermek      | Guyana\
+ Callum     | Guyana\
+ Mia        | Guyana\
+ Lauren     | Guyana\
+ Linda      | Croatia\
+instagram=# SELECT login, country, profession FROM users WHERE profession = 'Unemployed';\
+   login    | country | profession \
+------------+---------+------------\
+ user123    | Guyana  | Unemployed\
+ user123    | Croatia | Unemployed\
+ James      | Guyana  | Unemployed\
+ Ermek      | Guyana  | Unemployed\
+ Sarah      | Croatia | Unemployed\
+ bzzzz      | Croatia | Unemployed\
+ test_user  | Guyana  | Unemployed\
+ Charles    | Guyana  | Unemployed\
+ Sarah      | Croatia | Unemployed\
+ Konstantin | Croatia | Unemployed\
+ Jessica    | Croatia | Unemployed\
+ Tracy      | Guyana  | Unemployed\
+ James      | Croatia | Unemployed\
+ Olivia     | Croatia | Unemployed\
+ Atai       | Croatia | Unemployed\
+ Olivia     | Guyana  | Unemployed\
+ Michael    | Croatia | Unemployed\
+ Michael    | Guyana  | Unemployed\
+ Ava        | Guyana  | Unemployed\
+ Lily       | Guyana  | Unemployed\
+ Madison    | Guyana  | Unemployed\
+ Joanne     | Guyana  | Unemployed\
+ Sarah      | Croatia | Unemployed\
+ William    | Croatia | Unemployed\
+ Ava        | Guyana  | Unemployed\
+ Joseph     | Guyana  | Unemployed\
+ Isabella   | Guyana  | Unemployed\
+ Ermek      | Guyana  | Unemployed\
+ Callum     | Guyana  | Unemployed\
+ Mia        | Guyana  | Unemployed\
+ Lauren     | Guyana  | Unemployed\
+ Linda      | Croatia | Unemployed\
+instagram=# UPDATE users SET phone_number = '+996 999 999 999' WHERE phone_number = '000';\
+UPDATE 0\
+instagram=# DELETE FROM users WHERE password = '12345' AND password = 'user1236' AND password = 'qwerty';\
+DELETE 0\
+instagram=# SELECT email, profession WHERE profession = '.NET Developer' GROUP BY login;\
+ERROR:  column "email" does not exist\
+LINE 1: SELECT email, profession WHERE profession = '.NET Developer'...\
+               ^\
+instagram=# SELECT email, profession FROM users WHERE profession = '.NET Developer' GROUP BY login;\
+ERROR:  column "users.email" must appear in the GROUP BY clause or be used in an aggregate function\
+LINE 1: SELECT email, profession FROM users WHERE profession = '.NET...\
+               ^\
+instagram=# SELECT email, profession FROM users WHERE profession = '.NET Developer' GROUP BY login;\
+ERROR:  column "users.email" must appear in the GROUP BY clause or be used in an aggregate function\
+LINE 1: SELECT email, profession FROM users WHERE profession = '.NET...\
+               ^\
+instagram=# SELECT login, email, profession FROM users WHERE profession = '.NET Developer' GROUP BY login;\
+ERROR:  column "users.email" must appear in the GROUP BY clause or be used in an aggregate function\
+LINE 1: SELECT login, email, profession FROM users WHERE profession ...\
+                      ^\
+instagram=# SELECT profession FROM users WHERE profession = '.NET Developer';\
+   profession   \
+----------------\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+ .NET Developer\
+instagram=# SELECT profession, email, login FROM users WHERE profession = '.NET Developer' GROUP BY login;\
+ERROR:  column "users.profession" must appear in the GROUP BY clause or be used in an aggregate function\
+LINE 1: SELECT profession, email, login FROM users WHERE profession ...\
+               ^\
+instagram=# SELECT profession, email, login FROM users WHERE profession = '.NET Developer' ORDER BY login;\
+   profession   |        email         |   login   \
+----------------+----------------------+-----------\
+ .NET Developer | richard@outlook.com  | Abigail\
+ .NET Developer | rhys@mail.ru         | Abigail\
+ .NET Developer | lily@mail.ru         | Adinai\
+ .NET Developer | liam@gmail.com       | Adinai\
+ .NET Developer | sarah@bk.ru          | Adinai\
+ .NET Developer | bethany@mail.ru      | Adinai\
+ .NET Developer | abigail@outlook.com  | Aibek\
+ .NET Developer | mary@bk.ru           | Aibek\
+ .NET Developer | poppy@mail.ru        | Alexander\
+ .NET Developer | margaret@bk.ru       | Alexander\
+ .NET Developer | reece@gmail.com      | Aslan\
+ .NET Developer | daniyar@outlook.com  | Ava\
+ .NET Developer | ava@bk.ru            | Ava\
+ .NET Developer | daniel@mail.ru       | Ava\
+ .NET Developer | michael@bk.ru        | Ava\
+ .NET Developer | daniel@mail.ru       | Ava\
+ .NET Developer | olivia@bk.ru         | Ava\
+ .NET Developer | reece@gmail.com      | Barbara\
+ .NET Developer | james@outlook.com    | Bethany\
+ .NET Developer | harry@bk.ru          | Bethany\
+ .NET Developer | atai@mail.ru         | Callum\
+ .NET Developer | barbara@outlook.com  | Charlie\
+ .NET Developer | oliver@outlook.com   | Charlie\
+ .NET Developer | jessica@outlook.com  | Charlotte\
+ .NET Developer | bzzzz@outlook.com    | Connor\
+ .NET Developer | noah@gmail.com       | Damian\
+ .NET Developer | linda@mail.ru        | Damian\
+ .NET Developer | charlie@gmail.com    | Damian\
+ .NET Developer | user_user@gmail.com  | Daniel\
+ .NET Developer | mia@mail.ru          | Elizabeth\
+ .NET Developer | charlie@mail.ru      | Elizabeth\
+ .NET Developer | michelle@mail.ru     | Emily\
+instagram=# }
